@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "318482210475",
+    "project_id": "petscape-offline-6d094",
+    "storage_bucket": "petscape-offline-6d094.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318482210475:android:9ce9e7cc3f7f6674dc61ee",
+        "android_client_info": {
+          "package_name": "com.blakdragon.petscapeoffline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318482210475-tjaji993ffvbujmu385ovkfe2rd8sp5t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blakdragon.petscapeoffline",
+            "certificate_hash": "5d72af4b00a9f4a2b59c6cdc9f5a60e357984c8b"
+          }
+        },
+        {
+          "client_id": "318482210475-le0fkai4h3rmc5qm8toasbcviapv99qu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiI9zssp3TaSwfghjRMG1Kr_1u67V5llM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318482210475-le0fkai4h3rmc5qm8toasbcviapv99qu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

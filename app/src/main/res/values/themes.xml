@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.PetscapeOffline" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/onPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark</item>
+
+        <item name="android:windowBackground">@color/secondary</item>
+
+        <item name="android:textViewStyle">@style/Theme.PetscapeOffline.TextView</item>
+        <item name="android:editTextStyle">@style/Theme.PetscapeOffline.EditText</item>
+        <item name="editTextStyle">@style/Theme.PetscapeOffline.EditText</item>
+        <item name="android:buttonStyle">@style/Theme.PetscapeOffline.Button</item>
+        <item name="buttonStyle">@style/Theme.PetscapeOffline.Button</item>
+    </style>
+
+    <style name="Theme.PetscapeOffline.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/onPrimary</item>
+        <item name="android:fontFamily">@font/source_sans_pro</item>
+    </style>
+
+    <style name="Theme.PetscapeOffline.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_edittext</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:fontFamily">@font/source_sans_pro</item>
+    </style>
+
+    <style name="Theme.PetscapeOffline.Button" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/onPrimary</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">@font/source_sans_pro</item>
+    </style>
+</resources>
