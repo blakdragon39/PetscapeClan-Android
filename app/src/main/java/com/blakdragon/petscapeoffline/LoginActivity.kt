@@ -6,20 +6,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.blakdragon.petscapeoffline.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
-
-    private val auth = FirebaseAuth.getInstance()
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
@@ -33,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         binding.bGoogleSignIn.setOnClickListener { googleSignIn() }
@@ -56,7 +52,51 @@ class LoginActivity : AppCompatActivity() {
 
 class LoginViewModel : ViewModel() {
 
+    val email = MutableLiveData("")
+    val password = MutableLiveData("")
+    val displayName = MutableLiveData("")
+
+    val registering = MutableLiveData(false)
+
+    val loginEnabled = MediatorLiveData<Boolean>()
+    val registerEnabled = MediatorLiveData<Boolean>()
+
+    init {
+        loginEnabled.addSource(email) { checkLoginEnabled() }
+        loginEnabled.addSource(password) { checkLoginEnabled() }
+
+        registerEnabled.addSource(email) { checkRegisterEnabled() }
+        registerEnabled.addSource(password)  { checkRegisterEnabled() }
+        registerEnabled.addSource(displayName)  { checkRegisterEnabled() }
+    }
+
     fun login() = viewModelScope.launch {
 
+    }
+
+    fun checkRegistering() {
+        if (registering.value == true) {
+            register()
+        } else {
+            registering.value = true
+            checkRegisterEnabled()
+        }
+    }
+
+    private fun register() = viewModelScope.launch {
+
+    }
+
+    private fun checkLoginEnabled() {
+        loginEnabled.value = email.value.isNullOrEmpty().not() && password.value.isNullOrEmpty().not()
+    }
+
+    private fun checkRegisterEnabled() {
+        registerEnabled.value = registering.value == false ||
+                (
+                    email.value.isNullOrEmpty().not() &&
+                    password.value.isNullOrEmpty().not() &&
+                    displayName.value.isNullOrEmpty().not()
+                )
     }
 }
