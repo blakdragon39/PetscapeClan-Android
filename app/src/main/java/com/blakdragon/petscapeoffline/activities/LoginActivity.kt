@@ -1,26 +1,31 @@
-package com.blakdragon.petscapeoffline
+package com.blakdragon.petscapeoffline.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
+import com.blakdragon.petscapeoffline.R
 import com.blakdragon.petscapeoffline.databinding.ActivityLoginBinding
+import com.blakdragon.petscapeoffline.network.NetworkInstance
+import com.blakdragon.petscapeoffline.network.requests.GoogleLoginRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
 import timber.log.Timber
 
-class LoginActivity : AppCompatActivity() {
+
+class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
 
     private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK && result.data != null) {
+        if (result.data != null) {
             handleGoogleSignInResult(result.data!!)
         }
     }
@@ -35,7 +40,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun googleSignIn() {
-        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("285206861319-4rssk6blmo670m0o5itqqllmf9dvuj8s.apps.googleusercontent.com")
+            .build()
         val client = GoogleSignIn.getClient(this, options)
         googleSignInResult.launch(client.signInIntent)
     }
@@ -43,9 +50,9 @@ class LoginActivity : AppCompatActivity() {
     private fun handleGoogleSignInResult(data: Intent) = lifecycleScope.launch {
         try {
             val account = GoogleSignIn.getSignedInAccountFromIntent(data).await()
-            Timber.tag("OFFLINE").i(account.displayName)
-        } catch (e: Exception) {
-            Timber.e(e)
+            viewModel.googleLogin(account.idToken!!)
+        } catch (e: ApiException) {
+            showMessage("signInResult:failed code=${e.statusCode}")
         }
     }
 }
@@ -72,6 +79,15 @@ class LoginViewModel : ViewModel() {
 
     fun login() = viewModelScope.launch {
 
+    }
+
+    fun googleLogin(idToken: String) = viewModelScope.launch {
+        try {
+            val response = NetworkInstance.API.googleLogin(GoogleLoginRequest(idToken))
+            Timber.i(response.displayName)
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
     }
 
     fun checkRegistering() {

@@ -1,7 +1,6 @@
 package com.blakdragon.petscapeoffline
 
 import android.app.Application
-import com.google.firebase.FirebaseApp
 import timber.log.Timber
 
 class PetscapeApplication : Application() {
@@ -12,7 +11,5 @@ class PetscapeApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-
-        FirebaseApp.initializeApp(this)
     }
 }
