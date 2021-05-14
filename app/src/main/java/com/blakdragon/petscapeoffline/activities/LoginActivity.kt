@@ -10,12 +10,13 @@ import com.blakdragon.petscapeoffline.R
 import com.blakdragon.petscapeoffline.databinding.ActivityLoginBinding
 import com.blakdragon.petscapeoffline.network.NetworkInstance
 import com.blakdragon.petscapeoffline.network.requests.GoogleLoginRequest
+import com.blakdragon.petscapeoffline.network.requests.LoginRequest
+import com.blakdragon.petscapeoffline.network.requests.RegisterRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import retrofit2.HttpException
 import timber.log.Timber
 
 
@@ -78,7 +79,12 @@ class LoginViewModel : ViewModel() {
     }
 
     fun login() = viewModelScope.launch {
-
+        try {
+            val response = NetworkInstance.API.login(LoginRequest(email = email.value!!, password = password.value!!))
+            Timber.i(response.displayName)
+        } catch (e: Exception) {
+            Timber.e(e) //todo
+        }
     }
 
     fun googleLogin(idToken: String) = viewModelScope.launch {
@@ -86,7 +92,7 @@ class LoginViewModel : ViewModel() {
             val response = NetworkInstance.API.googleLogin(GoogleLoginRequest(idToken))
             Timber.i(response.displayName)
         } catch (e: Exception) {
-            Timber.e(e)
+            Timber.e(e) //todo
         }
     }
 
@@ -100,7 +106,16 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun register() = viewModelScope.launch {
-
+        try {
+            val response = NetworkInstance.API.register(RegisterRequest(
+                email = email.value!!,
+                password = password.value!!,
+                displayName = displayName.value!!
+            ))
+            Timber.i(response.displayName)
+        } catch (e: Exception) {
+            Timber.e(e) //todo
+        }
     }
 
     private fun checkLoginEnabled() {
