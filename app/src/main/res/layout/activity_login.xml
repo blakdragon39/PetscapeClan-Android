@@ -11,94 +11,113 @@
             type="com.blakdragon.petscapeoffline.activities.LoginViewModel"/>
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraints"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp">
+        android:layout_height="match_parent">
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".5"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/back"
+            android:layout_margin="16dp"
+            android:tint="@color/onPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:gravity="center"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
+            android:padding="32dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:text="@={viewModel.email}"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:text="@={viewModel.password}"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:hint="@string/display_name"
-            android:inputType="textPersonName|textCapWords"
-            android:text="@={viewModel.displayName}"
-            android:visibility="@{viewModel.registering ? View.VISIBLE : View.GONE}"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="16dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bLogin"
+            <View
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/login"
-                android:onClick="@{() -> viewModel.login()}"
-                android:enabled="@{viewModel.loginEnabled}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/bRegister"/>
+                android:layout_height="0dp"
+                android:layout_weight=".5"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bRegister"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.email}"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etDisplayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:hint="@string/display_name"
+                android:inputType="textPersonName|textCapWords"
+                android:text="@={viewModel.displayName}"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonConstraints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/login"
+                    android:onClick="@{() -> viewModel.login()}"
+                    android:enabled="@{viewModel.loginEnabled}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/bRegister" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{viewModel.registering ? @string/register_exclamation : @string/register_question}"
+                    android:onClick="@{() -> viewModel.checkRegistering()}"
+                    android:enabled="@{viewModel.registerEnabled}"
+                    app:layout_constraintStart_toEndOf="@id/bLogin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="@string/register_question"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@{viewModel.registering ? @string/register_exclamation : @string/register_question}"
-                android:onClick="@{() -> viewModel.checkRegistering()}"
-                android:enabled="@{viewModel.registerEnabled}"
-                app:layout_constraintStart_toEndOf="@id/bLogin"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="@string/register_question"/>
+                android:layout_height="0dp"
+                android:layout_weight=".5"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/bGoogleSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"/>
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".5"/>
+        </LinearLayout>
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/bGoogleSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"/>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

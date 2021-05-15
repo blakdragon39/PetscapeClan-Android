@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
+import androidx.transition.TransitionManager
 import com.blakdragon.petscapeoffline.R
 import com.blakdragon.petscapeoffline.databinding.ActivityLoginBinding
 import com.blakdragon.petscapeoffline.network.NetworkInstance
@@ -38,6 +41,14 @@ class LoginActivity : BaseActivity() {
         binding.viewModel = viewModel
 
         binding.bGoogleSignIn.setOnClickListener { googleSignIn() }
+        binding.ivBack.setOnClickListener { viewModel.registering.value = false }
+
+        viewModel.registering.observe(this, Observer { transitionRegister(it) })
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        viewModel.registering.value = false
     }
 
     private fun googleSignIn() {
@@ -56,6 +67,26 @@ class LoginActivity : BaseActivity() {
             showMessage("signInResult:failed code=${e.statusCode}")
         }
     }
+
+    private fun transitionRegister(registering: Boolean) {
+        binding.bLogin.isVisible = !registering
+        binding.etDisplayName.isVisible = registering
+
+        val backCs = ConstraintSet().apply {
+            clone(binding.constraints)
+        }
+
+        if (registering) {
+            backCs.clear(binding.ivBack.id, ConstraintSet.END)
+            backCs.connect(binding.ivBack.id, ConstraintSet.START, binding.root.id, ConstraintSet.START, resources.getDimensionPixelOffset(R.dimen.margin))
+        } else {
+            backCs.clear(binding.ivBack.id, ConstraintSet.START)
+            backCs.connect(binding.ivBack.id, ConstraintSet.END, binding.root.id, ConstraintSet.START)
+        }
+
+        TransitionManager.beginDelayedTransition(binding.constraints)
+        backCs.applyTo(binding.constraints)
+    }
 }
 
 class LoginViewModel : ViewModel() {
@@ -70,12 +101,13 @@ class LoginViewModel : ViewModel() {
     val registerEnabled = MediatorLiveData<Boolean>()
 
     init {
-        loginEnabled.addSource(email) { checkLoginEnabled() }
-        loginEnabled.addSource(password) { checkLoginEnabled() }
+        listOf(email, password).forEach {
+            loginEnabled.addSource(it) { checkLoginEnabled() }
+        }
 
-        registerEnabled.addSource(email) { checkRegisterEnabled() }
-        registerEnabled.addSource(password)  { checkRegisterEnabled() }
-        registerEnabled.addSource(displayName)  { checkRegisterEnabled() }
+        listOf(registering, email, password, displayName).forEach {
+            registerEnabled.addSource(it) { checkRegisterEnabled() }
+        }
     }
 
     fun login() = viewModelScope.launch {
