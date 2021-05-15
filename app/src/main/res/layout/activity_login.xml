@@ -56,14 +56,35 @@
                 android:inputType="textEmailAddress"
                 android:text="@={viewModel.email}"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:text="@={viewModel.password}"/>
+                android:layout_marginTop="8dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.password}"
+                    android:paddingEnd="36dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/visibility"
+                    android:adjustViewBounds="true"
+                    android:tint="@color/primary"
+                    android:padding="6dp"
+                    android:onClick="@{() -> viewModel.togglePasswordVisibility()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etDisplayName"

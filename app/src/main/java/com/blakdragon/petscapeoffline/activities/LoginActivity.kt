@@ -2,6 +2,7 @@ package com.blakdragon.petscapeoffline.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintSet
@@ -42,6 +43,8 @@ class LoginActivity : BaseActivity() {
         binding.ivBack.setOnClickListener { viewModel.registering.value = false }
 
         viewModel.registering.observe(this, Observer { transitionRegister(it) })
+        viewModel.passwordVisible.observe(this, Observer { visible -> changePasswordInputType(visible) })
+
         viewModel.loginResult.observe(this, Observer { result ->
             if (!result.handled) {
                 if (result.isSuccessful) {
@@ -98,6 +101,12 @@ class LoginActivity : BaseActivity() {
 
         TransitionManager.beginDelayedTransition(binding.constraints)
         cs.applyTo(binding.constraints)
+    }
+
+    private fun changePasswordInputType(passwordVisible: Boolean) {
+        val position = binding.etPassword.selectionStart
+        binding.etPassword.transformationMethod = if (passwordVisible) null else PasswordTransformationMethod()
+        binding.etPassword.setSelection(position)
     }
 
     private fun handleLogin(user: User) {

@@ -20,6 +20,7 @@ class LoginViewModel : ViewModel() {
 
     val registering = MutableLiveData(false)
     val busy = MutableLiveData(false)
+    val passwordVisible = MutableLiveData(false)
 
     val loginEnabled = MediatorLiveData<Boolean>()
     val registerEnabled = MediatorLiveData<Boolean>()
@@ -34,6 +35,10 @@ class LoginViewModel : ViewModel() {
         listOf(registering, email, password, displayName).forEach {
             registerEnabled.addSource(it) { checkRegisterEnabled() }
         }
+    }
+
+    fun togglePasswordVisibility() {
+        passwordVisible.value = passwordVisible.value?.not()
     }
 
     fun login() = viewModelScope.launch {
