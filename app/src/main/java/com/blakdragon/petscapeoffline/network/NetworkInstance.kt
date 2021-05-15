@@ -12,6 +12,10 @@ object NetworkInstance {
 
     private const val BASE_URL = "http://10.0.2.2:8080/" //todo flavours
 
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
     val API: PetscapeAPI
 
     init {
@@ -20,10 +24,6 @@ object NetworkInstance {
             addLogger(okHttpClientBuilder)
         }
         val okHttpClient = okHttpClientBuilder.build()
-
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
 
         API = Retrofit.Builder()
             .baseUrl(BASE_URL)

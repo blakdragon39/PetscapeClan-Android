@@ -11,12 +11,15 @@ import androidx.lifecycle.*
 import androidx.transition.TransitionManager
 import com.blakdragon.petscapeoffline.R
 import com.blakdragon.petscapeoffline.databinding.ActivityLoginBinding
+import com.blakdragon.petscapeoffline.models.NetworkResult
+import com.blakdragon.petscapeoffline.models.User
 import com.blakdragon.petscapeoffline.network.NetworkInstance
 import com.blakdragon.petscapeoffline.network.requests.GoogleLoginRequest
 import com.blakdragon.petscapeoffline.network.requests.LoginRequest
 import com.blakdragon.petscapeoffline.network.requests.RegisterRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -44,6 +47,15 @@ class LoginActivity : BaseActivity() {
         binding.ivBack.setOnClickListener { viewModel.registering.value = false }
 
         viewModel.registering.observe(this, Observer { transitionRegister(it) })
+        viewModel.loginResult.observe(this, Observer { result ->
+            if (!result.handled) {
+                if (result.isSuccessful) {
+                    handleLogin(result.getUnhandledData())
+                } else {
+                    handleError(result.getUnhandledException())
+                }
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -54,6 +66,7 @@ class LoginActivity : BaseActivity() {
     private fun googleSignIn() {
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("285206861319-4rssk6blmo670m0o5itqqllmf9dvuj8s.apps.googleusercontent.com")
+            .requestEmail()
             .build()
         val client = GoogleSignIn.getClient(this, options)
         googleSignInResult.launch(client.signInIntent)
@@ -64,7 +77,9 @@ class LoginActivity : BaseActivity() {
             val account = GoogleSignIn.getSignedInAccountFromIntent(data).await()
             viewModel.googleLogin(account.idToken!!)
         } catch (e: ApiException) {
-            showMessage("signInResult:failed code=${e.statusCode}")
+            if (e.statusCode != GoogleSignInStatusCodes.SIGN_IN_CANCELLED || e.statusCode != GoogleSignInStatusCodes.SIGN_IN_CURRENTLY_IN_PROGRESS) {
+                showMessage("signInResult:failed code=${e.statusCode}")
+            }
         }
     }
 
@@ -72,20 +87,25 @@ class LoginActivity : BaseActivity() {
         binding.bLogin.isVisible = !registering
         binding.etDisplayName.isVisible = registering
 
-        val backCs = ConstraintSet().apply {
+        val cs = ConstraintSet().apply {
             clone(binding.constraints)
         }
 
         if (registering) {
-            backCs.clear(binding.ivBack.id, ConstraintSet.END)
-            backCs.connect(binding.ivBack.id, ConstraintSet.START, binding.root.id, ConstraintSet.START, resources.getDimensionPixelOffset(R.dimen.margin))
+            cs.clear(binding.ivBack.id, ConstraintSet.END)
+            cs.connect(binding.ivBack.id, ConstraintSet.START, binding.root.id, ConstraintSet.START, resources.getDimensionPixelOffset(R.dimen.margin))
         } else {
-            backCs.clear(binding.ivBack.id, ConstraintSet.START)
-            backCs.connect(binding.ivBack.id, ConstraintSet.END, binding.root.id, ConstraintSet.START)
+            cs.clear(binding.ivBack.id, ConstraintSet.START)
+            cs.connect(binding.ivBack.id, ConstraintSet.END, binding.root.id, ConstraintSet.START)
         }
 
         TransitionManager.beginDelayedTransition(binding.constraints)
-        backCs.applyTo(binding.constraints)
+        cs.applyTo(binding.constraints)
+    }
+
+    private fun handleLogin(user: User) {
+        Timber.tag("USER").i(user.displayName)
+        Timber.tag("USER").i(user.token)
     }
 }
 
@@ -100,6 +120,10 @@ class LoginViewModel : ViewModel() {
     val loginEnabled = MediatorLiveData<Boolean>()
     val registerEnabled = MediatorLiveData<Boolean>()
 
+    val loginResult = MutableLiveData<NetworkResult<User>>()
+
+    //todo loading state
+
     init {
         listOf(email, password).forEach {
             loginEnabled.addSource(it) { checkLoginEnabled() }
@@ -113,18 +137,18 @@ class LoginViewModel : ViewModel() {
     fun login() = viewModelScope.launch {
         try {
             val response = NetworkInstance.API.login(LoginRequest(email = email.value!!, password = password.value!!))
-            Timber.i(response.displayName)
+            loginResult.value = NetworkResult(data = response)
         } catch (e: Exception) {
-            Timber.e(e) //todo
+            loginResult.value = NetworkResult(exception = e)
         }
     }
 
     fun googleLogin(idToken: String) = viewModelScope.launch {
         try {
             val response = NetworkInstance.API.googleLogin(GoogleLoginRequest(idToken))
-            Timber.i(response.displayName)
+            loginResult.value = NetworkResult(data = response)
         } catch (e: Exception) {
-            Timber.e(e) //todo
+            loginResult.value = NetworkResult(exception = e)
         }
     }
 
@@ -144,9 +168,9 @@ class LoginViewModel : ViewModel() {
                 password = password.value!!,
                 displayName = displayName.value!!
             ))
-            Timber.i(response.displayName)
+            loginResult.value = NetworkResult(data = response)
         } catch (e: Exception) {
-            Timber.e(e) //todo
+            loginResult.value = NetworkResult(exception = e)
         }
     }
 

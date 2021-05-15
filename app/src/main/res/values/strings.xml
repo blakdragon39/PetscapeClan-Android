@@ -2,6 +2,7 @@
     <string name="app_name">Petscape Offline</string>
 
     <string name="error">Error</string>
+    <string name="network_error">Something went wrong - try again later</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
