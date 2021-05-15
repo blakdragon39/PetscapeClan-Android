@@ -89,6 +89,7 @@
                     android:text="@string/login"
                     android:onClick="@{() -> viewModel.login()}"
                     android:enabled="@{viewModel.loginEnabled}"
+                    android:visibility="@{viewModel.busy ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/bRegister" />
 
@@ -99,9 +100,18 @@
                     android:text="@{viewModel.registering ? @string/register_exclamation : @string/register_question}"
                     android:onClick="@{() -> viewModel.checkRegistering()}"
                     android:enabled="@{viewModel.registerEnabled}"
+                    android:visibility="@{viewModel.busy ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toEndOf="@id/bLogin"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="@string/register_question"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.busy ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

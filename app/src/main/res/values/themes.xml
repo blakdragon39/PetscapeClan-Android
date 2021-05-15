@@ -5,9 +5,9 @@
         <item name="colorOnPrimary">@color/onPrimary</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorOnSecondary">@color/onPrimary</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/dark</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/secondary</item>
 
-        <item name="android:windowBackground">@color/secondary</item>
+        <item name="android:windowBackground">@color/background</item>
 
         <item name="android:textViewStyle">@style/Theme.PetscapeOffline.TextView</item>
         <item name="editTextStyle">@style/Theme.PetscapeOffline.EditText</item>

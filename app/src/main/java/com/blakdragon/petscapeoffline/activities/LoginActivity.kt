@@ -116,6 +116,7 @@ class LoginViewModel : ViewModel() {
     val displayName = MutableLiveData("")
 
     val registering = MutableLiveData(false)
+    val busy = MutableLiveData(false)
 
     val loginEnabled = MediatorLiveData<Boolean>()
     val registerEnabled = MediatorLiveData<Boolean>()
@@ -135,21 +136,29 @@ class LoginViewModel : ViewModel() {
     }
 
     fun login() = viewModelScope.launch {
+        busy.value = true
+
         try {
             val response = NetworkInstance.API.login(LoginRequest(email = email.value!!, password = password.value!!))
             loginResult.value = NetworkResult(data = response)
         } catch (e: Exception) {
             loginResult.value = NetworkResult(exception = e)
         }
+
+        busy.value = false
     }
 
     fun googleLogin(idToken: String) = viewModelScope.launch {
+        busy.value = true
+
         try {
             val response = NetworkInstance.API.googleLogin(GoogleLoginRequest(idToken))
             loginResult.value = NetworkResult(data = response)
         } catch (e: Exception) {
             loginResult.value = NetworkResult(exception = e)
         }
+
+        busy.value = false
     }
 
     fun checkRegistering() {
@@ -162,6 +171,8 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun register() = viewModelScope.launch {
+        busy.value = true
+
         try {
             val response = NetworkInstance.API.register(RegisterRequest(
                 email = email.value!!,
@@ -172,6 +183,8 @@ class LoginViewModel : ViewModel() {
         } catch (e: Exception) {
             loginResult.value = NetworkResult(exception = e)
         }
+
+        busy.value = false
     }
 
     private fun checkLoginEnabled() {
