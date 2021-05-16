@@ -1,6 +1,7 @@
-package com.blakdragon.petscapeoffline.network
+package com.blakdragon.petscapeoffline.core.network
 
 import com.blakdragon.petscapeoffline.BuildConfig
+import com.blakdragon.petscapeoffline.core.moshi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -11,10 +12,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object NetworkInstance {
 
     private const val BASE_URL = "http://10.0.2.2:8080/" //todo flavours
-
-    val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
 
     val API: PetscapeAPI
 

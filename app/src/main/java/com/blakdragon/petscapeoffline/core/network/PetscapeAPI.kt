@@ -1,9 +1,9 @@
-package com.blakdragon.petscapeoffline.network
+package com.blakdragon.petscapeoffline.core.network
 
 import com.blakdragon.petscapeoffline.models.User
-import com.blakdragon.petscapeoffline.network.requests.GoogleLoginRequest
-import com.blakdragon.petscapeoffline.network.requests.LoginRequest
-import com.blakdragon.petscapeoffline.network.requests.RegisterRequest
+import com.blakdragon.petscapeoffline.core.network.requests.GoogleLoginRequest
+import com.blakdragon.petscapeoffline.core.network.requests.LoginRequest
+import com.blakdragon.petscapeoffline.core.network.requests.RegisterRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 

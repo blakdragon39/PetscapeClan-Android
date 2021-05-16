@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.blakdragon.petscapeoffline.models.NetworkResult
 import com.blakdragon.petscapeoffline.models.User
-import com.blakdragon.petscapeoffline.network.NetworkInstance
-import com.blakdragon.petscapeoffline.network.requests.GoogleLoginRequest
-import com.blakdragon.petscapeoffline.network.requests.LoginRequest
-import com.blakdragon.petscapeoffline.network.requests.RegisterRequest
+import com.blakdragon.petscapeoffline.core.network.NetworkInstance
+import com.blakdragon.petscapeoffline.core.network.requests.GoogleLoginRequest
+import com.blakdragon.petscapeoffline.core.network.requests.LoginRequest
+import com.blakdragon.petscapeoffline.core.network.requests.RegisterRequest
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {

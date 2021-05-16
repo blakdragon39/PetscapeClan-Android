@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import androidx.transition.TransitionManager
 import com.blakdragon.petscapeoffline.R
+import com.blakdragon.petscapeoffline.core.PetscapePrefs
 import com.blakdragon.petscapeoffline.databinding.ActivityLoginBinding
 import com.blakdragon.petscapeoffline.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -35,6 +36,11 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (PetscapePrefs.user != null) {
+            proceed()
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -110,7 +116,14 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun handleLogin(user: User) {
-        Timber.tag("USER").i(user.displayName)
-        Timber.tag("USER").i(user.token)
+        PetscapePrefs.user = user
+        proceed()
+    }
+
+    private fun proceed() {
+        Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(this)
+        }
     }
 }

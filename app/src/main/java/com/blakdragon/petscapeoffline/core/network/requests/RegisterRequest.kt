@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeoffline.network.requests
+package com.blakdragon.petscapeoffline.core.network.requests
 
 class RegisterRequest(
     val email: String,
