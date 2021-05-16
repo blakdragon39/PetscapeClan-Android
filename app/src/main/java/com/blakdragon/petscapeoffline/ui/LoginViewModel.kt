@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeoffline.activities
+package com.blakdragon.petscapeoffline.ui
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeoffline.activities
+package com.blakdragon.petscapeoffline.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import timber.log.Timber
 
 
 class LoginActivity : BaseActivity() {

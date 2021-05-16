@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeoffline.activities
+package com.blakdragon.petscapeoffline.ui
 
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
