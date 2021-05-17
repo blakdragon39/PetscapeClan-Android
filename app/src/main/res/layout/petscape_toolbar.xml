@@ -11,10 +11,8 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:src="@drawable/menu"
-        android:tint="@color/onPrimary"
         android:padding="12dp"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
