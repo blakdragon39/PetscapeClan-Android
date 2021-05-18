@@ -7,9 +7,12 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="display_name">Display Name</string>
 
     <string name="register_question">Register?</string>
     <string name="register_exclamation">Register!</string>
+
+    <string name="add_new_clan_member">Add New Clan Member</string>
 
 </resources>

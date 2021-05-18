@@ -5,7 +5,7 @@ class User(
     val token: String,
     val clanMembers: List<String>,
     val displayName: String,
-    val approved: Boolean,
-    val admin: Boolean,
-    val superAdmin: Boolean
+    val isApproved: Boolean,
+    val isAdmin: Boolean,
+    val isSuperAdmin: Boolean
 )

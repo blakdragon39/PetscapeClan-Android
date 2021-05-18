@@ -2,12 +2,35 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@id/fragmentHome">
 
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.blakdragon.petscapeoffline.ui.HomeFragment"
-        android:label="homeFragment"/>
+        android:name="com.blakdragon.petscapeoffline.ui.home.HomeFragment"
+        android:label="homeFragment">
+        <action
+            android:id="@+id/toAdminHome"
+            app:destination="@id/fragmentAdminHome"
+            app:popUpTo="@id/fragmentAdminHome"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/toUserHome"
+            app:destination="@id/fragmentUserHome"
+            app:popUpTo="@id/fragmentUserHome"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAdminHome"
+        android:name="com.blakdragon.petscapeoffline.ui.home.AdminHomeFragment"
+        android:label="adminHomeFragment"
+        tools:layout="@layout/fragment_admin_home"/>
+
+    <fragment
+        android:id="@+id/fragmentUserHome"
+        android:name="com.blakdragon.petscapeoffline.ui.home.UserHomeFragment"
+        android:label="userHomeFragment"/>
 
 </navigation>

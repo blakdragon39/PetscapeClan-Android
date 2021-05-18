@@ -1,5 +1,6 @@
 package com.blakdragon.petscapeoffline.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
@@ -7,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blakdragon.petscapeoffline.R
+import com.blakdragon.petscapeoffline.core.PetscapePrefs
 import com.blakdragon.petscapeoffline.databinding.ActivityMainBinding
 
 
@@ -22,6 +24,14 @@ class MainActivity : BaseActivity() {
         binding.lifecycleOwner = this
 
         binding.toolbar.binding.ivMenu.setOnClickListener { toggleDrawer() }
+    }
+
+    fun logout() {
+        PetscapePrefs.user = null
+        Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(this)
+        }
     }
 
     private fun toggleDrawer() {
