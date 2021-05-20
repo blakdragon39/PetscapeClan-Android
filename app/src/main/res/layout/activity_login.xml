@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.blakdragon.petscapeoffline.ui.LoginViewModel"/>
+            type="com.blakdragon.petscapeclan.ui.LoginViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

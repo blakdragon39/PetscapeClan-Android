@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Petscape Offline</string>
+    <string name="app_name">Petscape Clan</string>
 
     <string name="error">Error</string>
     <string name="network_error">Something went wrong - try again later</string>

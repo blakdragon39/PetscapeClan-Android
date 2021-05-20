@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.blakdragon.petscapeoffline.ui.home.AdminHomeViewModel" />
+            type="com.blakdragon.petscapeclan.ui.home.AdminHomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

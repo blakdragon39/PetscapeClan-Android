@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.blakdragon.petscapeoffline.ui.MainViewModel" />
+            type="com.blakdragon.petscapeclan.ui.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,10 +23,11 @@
                 android:id="@+id/nav_host_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="?android:attr/actionBarSize"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/main" />
 
-            <com.blakdragon.petscapeoffline.ui.views.Drawer
+            <com.blakdragon.petscapeclan.ui.views.Drawer
                 android:id="@+id/drawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -35,7 +36,7 @@
 
         </androidx.drawerlayout.widget.DrawerLayout>
 
-        <com.blakdragon.petscapeoffline.ui.views.PetscapeToolbar
+        <com.blakdragon.petscapeclan.ui.views.PetscapeToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
