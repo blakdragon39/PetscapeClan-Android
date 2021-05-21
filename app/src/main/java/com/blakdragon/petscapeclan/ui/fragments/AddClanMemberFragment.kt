@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MediatorLiveData
@@ -16,6 +15,7 @@ import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
 import com.blakdragon.petscapeclan.databinding.FragmentAddClanMemberBinding
 import com.blakdragon.petscapeclan.models.WiseOldManPlayer
+import com.blakdragon.petscapeclan.models.enums.Rank
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.utils.toString
@@ -44,8 +44,8 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.bJoinDate.setOnClickListener { pickDate() }
+        binding.ivRank.setOnClickListener { pickRank() }
     }
 
     override fun onDestroy() {
@@ -60,12 +60,22 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
             viewModel.joinDate.value = LocalDate.of(year, month + 1, dayOfMonth)
         }, currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth).show()
     }
+
+    private fun pickRank() {
+        val popup = RankPopup()
+        popup.show(binding.ivRank) { rank ->
+            viewModel.rank.value = rank
+            popup.dismiss()
+        }
+    }
 }
 
 class AddClanMemberViewModel : ViewModel() {
 
     val runescapeName = MutableLiveData("")
     val joinDate = MutableLiveData(LocalDate.now())
+    val rank = MutableLiveData(Rank.Bronze)
+
     val joinDateString = MediatorLiveData<String>()
     val bossKc = MediatorLiveData<String>()
 

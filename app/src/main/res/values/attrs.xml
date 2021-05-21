@@ -3,4 +3,9 @@
     <declare-styleable name="PetscapeToolbar">
         <attr name="drawerOpen" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="RankView">
+        <attr name="rank" format="reference"/>
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
 </resources>
