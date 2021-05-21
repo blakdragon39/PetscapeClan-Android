@@ -10,7 +10,7 @@
     app:cardElevation="0dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvPetName"
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"

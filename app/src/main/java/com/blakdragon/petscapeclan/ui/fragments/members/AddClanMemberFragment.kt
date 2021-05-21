@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
 import com.blakdragon.petscapeclan.databinding.FragmentAddClanMemberBinding
+import com.blakdragon.petscapeclan.models.Achievement
 import com.blakdragon.petscapeclan.models.AddClanMemberRequest
 import com.blakdragon.petscapeclan.models.Pet
 import com.blakdragon.petscapeclan.models.WiseOldManPlayer
+import com.blakdragon.petscapeclan.models.enums.AchievementType
 import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.models.enums.Rank
 import com.blakdragon.petscapeclan.ui.BaseFragment
@@ -50,6 +52,7 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
         binding.ivRank.setOnClickListener { pickRank() }
         
         initPets()
+        initAchievements()
     }
 
     override fun onDestroy() {
@@ -59,7 +62,16 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
 
     private fun initPets() {
         binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPets.adapter = PetAdapter(PetType.values().map { Pet(it) }, this::onPetSelected)
+        binding.rvPets.adapter = SelectableAdapter(
+            PetType.values().map { Pet(it) }.map { SelectableObject(it, getString(it.type.displayNameId)) })
+            { pet, selected -> onPetSelected(pet as Pet, selected) }
+    }
+
+    private fun initAchievements() {
+        binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAchievements.adapter = SelectableAdapter(
+            AchievementType.values().map { Achievement(it) }.map { SelectableObject(it, getString(it.type.labelId)) })
+            { achievement, selected -> onAchievementSelected(achievement as Achievement, selected)}
     }
 
     private fun pickDate() {
@@ -83,6 +95,12 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
         if (selected) currentPets.add(pet) else currentPets.remove(pet)
         viewModel.pets.value = currentPets
     }
+
+    private fun onAchievementSelected(achievement: Achievement, selected: Boolean) {
+        val currentAchievements = viewModel.achievements.value?.toMutableList() ?: mutableListOf()
+        if (selected) currentAchievements.add(achievement) else currentAchievements.remove(achievement)
+        viewModel.achievements.value = currentAchievements
+    }
 }
 
 class AddClanMemberViewModel : ViewModel() {
@@ -91,6 +109,7 @@ class AddClanMemberViewModel : ViewModel() {
     val joinDate = MutableLiveData(LocalDate.now())
     val rank = MutableLiveData(Rank.Bronze)
     val pets = MutableLiveData<List<Pet>>()
+    val achievements = MutableLiveData<List<Achievement>>()
 
     val joinDateString = MediatorLiveData<String>()
     val bossKc = MediatorLiveData<String>()

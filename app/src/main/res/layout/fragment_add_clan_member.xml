@@ -15,41 +15,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etRunescapeName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/member_runescape_name"
-                android:layout_marginEnd="8dp"
-                android:text="@={viewModel.runescapeName}"
-                android:inputType="text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivRank"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivRank"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:imageResource="@{viewModel.rank.iconId}"
-                app:layout_constraintTop_toTopOf="@id/etRunescapeName"
-                app:layout_constraintBottom_toBottomOf="@id/etRunescapeName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                tools:src="@drawable/rank_dragon"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etRunescapeName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/member_runescape_name"
+                    android:layout_marginEnd="8dp"
+                    android:text="@={viewModel.runescapeName}"
+                    android:inputType="text"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivRank"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:imageResource="@{viewModel.rank.iconId}"
+                    tools:src="@drawable/rank_dragon"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/joinDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@id/etRunescapeName">
+                android:layout_marginTop="16dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -71,8 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@id/joinDate">
+                android:layout_marginTop="16dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -94,26 +93,56 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/member_pets"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/pets"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/onPrimary"
-                app:cardCornerRadius="16dp"
-                app:layout_constraintTop_toBottomOf="@id/killCount">
+                app:cardCornerRadius="16dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvPets"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="16dp"
-                    tools:listitem="@layout/cell_pet"/>
+                    tools:listitem="@layout/cell_selectable_text"/>
 
             </androidx.cardview.widget.CardView>
 
-            <!-- todo achievements -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/member_achievements"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/onPrimary"
+                app:cardCornerRadius="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAchievements"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    tools:listitem="@layout/cell_selectable_text"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
 
