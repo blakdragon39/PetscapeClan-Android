@@ -5,6 +5,7 @@ import com.blakdragon.petscapeclan.models.User
 import com.blakdragon.petscapeclan.core.network.requests.GoogleLoginRequest
 import com.blakdragon.petscapeclan.core.network.requests.LoginRequest
 import com.blakdragon.petscapeclan.core.network.requests.RegisterRequest
+import com.blakdragon.petscapeclan.models.AddClanMemberRequest
 import com.blakdragon.petscapeclan.models.ClanMember
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -26,4 +27,10 @@ interface PetscapeAPI {
     suspend fun getClanMembers(
         @Header("Authorization") token: String? = PetscapePrefs.user?.token
     ) : List<ClanMember>
+
+    @POST("api/clanMembers")
+    suspend fun addClanMember(
+        @Body request: AddClanMemberRequest,
+        @Header("Authorization") token: String? = PetscapePrefs.user?.token
+    ) : ClanMember
 }

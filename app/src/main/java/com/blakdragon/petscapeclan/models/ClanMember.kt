@@ -11,3 +11,11 @@ class ClanMember(
     val pets: List<Pet>,
     val achievements: List<Achievement>
 )
+
+class AddClanMemberRequest(
+    val runescapeName: String,
+    val rank: Rank,
+    val joinDate: LocalDate,
+    val pets: List<Pet>,
+    val achievements: List<Achievement>
+)

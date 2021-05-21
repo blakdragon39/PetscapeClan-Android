@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/fragmentAddClanMember"
-        android:name="com.blakdragon.petscapeclan.ui.fragments.AddClanMemberFragment"
+        android:name="com.blakdragon.petscapeclan.ui.fragments.members.AddClanMemberFragment"
         android:label="addClanMemberFragment"/>
 
 </navigation>

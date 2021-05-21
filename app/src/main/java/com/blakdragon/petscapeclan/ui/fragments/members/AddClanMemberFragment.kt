@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeclan.ui.fragments
+package com.blakdragon.petscapeclan.ui.fragments.members
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -7,17 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
 import com.blakdragon.petscapeclan.databinding.FragmentAddClanMemberBinding
+import com.blakdragon.petscapeclan.models.AddClanMemberRequest
+import com.blakdragon.petscapeclan.models.Pet
 import com.blakdragon.petscapeclan.models.WiseOldManPlayer
+import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.models.enums.Rank
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
+import com.blakdragon.petscapeclan.ui.fragments.RankPopup
 import com.blakdragon.petscapeclan.utils.toString
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -46,11 +48,18 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
         super.onViewCreated(view, savedInstanceState)
         binding.bJoinDate.setOnClickListener { pickDate() }
         binding.ivRank.setOnClickListener { pickRank() }
+        
+        initPets()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun initPets() {
+        binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPets.adapter = PetAdapter(PetType.values().map { Pet(it) }, this::onPetSelected)
     }
 
     private fun pickDate() {
@@ -68,6 +77,12 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
             popup.dismiss()
         }
     }
+
+    private fun onPetSelected(pet: Pet, selected: Boolean) {
+        val currentPets = viewModel.pets.value?.toMutableList() ?: mutableListOf()
+        if (selected) currentPets.add(pet) else currentPets.remove(pet)
+        viewModel.pets.value = currentPets
+    }
 }
 
 class AddClanMemberViewModel : ViewModel() {
@@ -75,6 +90,7 @@ class AddClanMemberViewModel : ViewModel() {
     val runescapeName = MutableLiveData("")
     val joinDate = MutableLiveData(LocalDate.now())
     val rank = MutableLiveData(Rank.Bronze)
+    val pets = MutableLiveData<List<Pet>>()
 
     val joinDateString = MediatorLiveData<String>()
     val bossKc = MediatorLiveData<String>()
@@ -89,6 +105,17 @@ class AddClanMemberViewModel : ViewModel() {
         joinDateString.addSource(joinDate) { date -> joinDateString.value = date.toString("MMM dd, yyyy") }
         wiseOldManPlayer.addSource(runescapeName) { startHiscoresJob() }
         bossKc.addSource(wiseOldManPlayer) { player -> bossKc.value = player.totalBossKc().toString() }
+    }
+
+    fun addClanMember() = viewModelScope.launch {
+        NetworkInstance.API.addClanMember(AddClanMemberRequest(
+            runescapeName = runescapeName.value!!,
+            rank = rank.value!!,
+            joinDate = joinDate.value!!,
+            pets = listOf(), //todo
+            achievements = listOf(), //todo
+        ))
+        //todo loading
     }
 
     private fun startHiscoresJob() = viewModelScope.launch {

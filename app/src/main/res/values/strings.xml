@@ -29,4 +29,55 @@
     <string name="rank_admin">Admin</string>
     <string name="rank_deputy_owner">Deputy Owner</string>
     <string name="rank_owner">Owner</string>
+
+    <string name="pet_abyssal_orphan">Abyssal Orphan</string>
+    <string name="pet_baby_mole">Baby Mole</string>
+    <string name="pet_callisto_cub">Callisto Cub</string>
+    <string name="pet_hellpuppy">Hellpuppy</string>
+    <string name="pet_ikkle_hydra">Ikkle Hydra</string>
+    <string name="pet_jal_nib_rek">Jal Nib Rek</string>
+    <string name="pet_kalphite_princess">Kalphite Princess</string>
+    <string name="pet_lil_zik">Lil Zik</string>
+    <string name="pet_little_nightmare">Little Nightmare</string>
+    <string name="pet_noon">Noon</string>
+    <string name="pet_olmlet">Olmlet</string>
+    <string name="pet_chaos_elemental">Pet Chaos Elemental</string>
+    <string name="pet_dagannoth_prime">Pet Dagannoth Prime</string>
+    <string name="pet_dagannoth_rex">Pet Dagannoth Rex</string>
+    <string name="pet_dagannoth_supreme">Pet Dagannoth Supreme</string>
+    <string name="pet_dark_core">Pet Dark Core</string>
+    <string name="pet_general_graardor">Pet General Graardor</string>
+    <string name="pet_kril_tsutsaroth">Pet K\'ril Tsutsaroth</string>
+    <string name="pet_kraken">Pet Kraken</string>
+    <string name="pet_kree_arra">Pet Kree\'Arra</string>
+    <string name="pet_smoke_devil">Pet Smoke Devil</string>
+    <string name="pet_snakeling">Pet Snakeling</string>
+    <string name="pet_zilyana">Pet Zilyana</string>
+    <string name="pet_prince_black_dragon">Prince Black Dragon</string>
+    <string name="pet_scorpias_offspring">Scorpias Offspring</string>
+    <string name="pet_skotos">Skotos</string>
+    <string name="pet_sraracha">Sraracha</string>
+    <string name="pet_tzrek_jad">Tzrek Jad</string>
+    <string name="pet_venenatis_spiderling">Venenatis Spiderling</string>
+    <string name="pet_vetion_jr">Vetion Jr.</string>
+    <string name="pet_vorki">Vorki</string>
+
+    <string name="pet_baby_chinchompa">Baby Chinchompa</string>
+    <string name="pet_beaver">Beaver</string>
+    <string name="pet_giant_squirrel">Giant Squirrel</string>
+    <string name="pet_heron">Heron</string>
+    <string name="pet_rift_guardian">Rift Guardian</string>
+    <string name="pet_rock_golem">Rock Golem</string>
+    <string name="pet_rocky">Rocky</string>
+    <string name="pet_tangleroot">Tangleroot</string>
+
+    <string name="pet_bloodhound">Bloodhound</string>
+    <string name="pet_chompy_chick">Chompy Chick</string>
+    <string name="pet_herbi">Herbi</string>
+    <string name="pet_lil_creator">Lil Creator</string>
+    <string name="pet_penance_queen">Pet Penance Queen</string>
+    <string name="pet_phoenix">Phoenix</string>
+    <string name="pet_tiny_tempor">Tiny Tempor</string>
+    <string name="pet_youngleff">Youngllef</string>
+    <string name="pet_smolcano">Smolcano</string>
 </resources>
