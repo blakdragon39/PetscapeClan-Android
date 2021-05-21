@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
 import com.blakdragon.petscapeclan.databinding.FragmentAddClanMemberBinding
-import com.blakdragon.petscapeclan.models.Achievement
-import com.blakdragon.petscapeclan.models.AddClanMemberRequest
-import com.blakdragon.petscapeclan.models.Pet
-import com.blakdragon.petscapeclan.models.WiseOldManPlayer
+import com.blakdragon.petscapeclan.models.*
 import com.blakdragon.petscapeclan.models.enums.AchievementType
 import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.models.enums.Rank
@@ -53,6 +51,16 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
         
         initPets()
         initAchievements()
+
+        viewModel.addClanMemberResult.observe(viewLifecycleOwner, Observer { result ->
+            if (!result.handled) {
+                if (result.isSuccessful) {
+                    findNavController().popBackStack()
+                } else {
+                    parentActivity.handleError(result.getUnhandledException())
+                }
+            }
+        })
     }
 
     override fun onDestroy() {
@@ -115,6 +123,9 @@ class AddClanMemberViewModel : ViewModel() {
     val bossKc = MediatorLiveData<String>()
 
     val hiscoresLoading = MutableLiveData(false)
+    val addClanMemberLoading = MutableLiveData(false)
+
+    val addClanMemberResult = MutableLiveData<NetworkResult<ClanMember>>()
 
     private val wiseOldManPlayer = MediatorLiveData<WiseOldManPlayer>()
 
@@ -127,14 +138,25 @@ class AddClanMemberViewModel : ViewModel() {
     }
 
     fun addClanMember() = viewModelScope.launch {
-        NetworkInstance.API.addClanMember(AddClanMemberRequest(
-            runescapeName = runescapeName.value!!,
-            rank = rank.value!!,
-            joinDate = joinDate.value!!,
-            pets = listOf(), //todo
-            achievements = listOf(), //todo
-        ))
-        //todo loading
+        addClanMemberLoading.value = true
+
+        try {
+            val response = NetworkInstance.API.addClanMember(
+                AddClanMemberRequest(
+                    runescapeName = runescapeName.value!!,
+                    rank = rank.value!!,
+                    joinDate = joinDate.value!!,
+                    pets = pets.value ?: emptyList(),
+                    achievements = achievements.value ?: emptyList()
+                )
+            )
+
+            addClanMemberResult.value = NetworkResult(data = response)
+        } catch (e: Exception) {
+            addClanMemberResult.value = NetworkResult(exception = e)
+        }
+
+        addClanMemberLoading.value = false
     }
 
     private fun startHiscoresJob() = viewModelScope.launch {

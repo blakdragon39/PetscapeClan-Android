@@ -17,6 +17,7 @@ import com.blakdragon.petscapeclan.models.NetworkResult
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeFragment : BaseFragment<MainActivity>() {
 
@@ -48,7 +49,10 @@ class HomeFragment : BaseFragment<MainActivity>() {
                 }
             }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         viewModel.getClanMembers()
     }
 
@@ -58,6 +62,7 @@ class HomeFragment : BaseFragment<MainActivity>() {
     }
 
     private fun initClanMembers(clanMembers: List<ClanMember>) {
+        clanMembers.forEach { Timber.i(it.runescapeName) }
         //todo
     }
 }
