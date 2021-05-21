@@ -34,7 +34,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun toggleDrawer() {
+    fun toggleDrawer() {
         viewModel.drawerOpen.value = viewModel.drawerOpen.value?.not()
 
         when (binding.drawerLayout.isDrawerOpen(binding.drawer)) {

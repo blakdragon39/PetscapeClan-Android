@@ -2,13 +2,21 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@id/fragmentHome">
 
+    <action
+        android:id="@+id/to_addClanMember"
+        app:destination="@id/fragmentAddClanMember"/>
+
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.blakdragon.petscapeclan.ui.home.HomeFragment"
+        android:name="com.blakdragon.petscapeclan.ui.fragments.HomeFragment"
         android:label="homeFragment"/>
+
+    <fragment
+        android:id="@+id/fragmentAddClanMember"
+        android:name="com.blakdragon.petscapeclan.ui.fragments.AddClanMemberFragment"
+        android:label="addClanMemberFragment"/>
 
 </navigation>

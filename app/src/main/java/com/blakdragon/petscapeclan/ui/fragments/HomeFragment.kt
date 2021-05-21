@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeclan.ui.home
+package com.blakdragon.petscapeclan.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,7 +37,7 @@ class HomeFragment : BaseFragment<MainActivity>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.bAddClanMember.setOnClickListener { /* todo */ }
+        binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
 
         viewModel.clanMembersResult.observe(viewLifecycleOwner) { result ->
             if (!result.handled) {
@@ -64,14 +64,19 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
 class HomeViewModel : ViewModel() {
 
+    val clanMembersLoading = MutableLiveData(false)
     val clanMembersResult = MutableLiveData<NetworkResult<List<ClanMember>>>()
 
     fun getClanMembers() = viewModelScope.launch {
+        clanMembersLoading.value = true
+
         try {
             val response = NetworkInstance.API.getClanMembers()
             clanMembersResult.value = NetworkResult(data = response)
         } catch (e: Exception) {
             clanMembersResult.value = NetworkResult(exception  = e)
         }
+
+        clanMembersLoading.value = false
     }
 }

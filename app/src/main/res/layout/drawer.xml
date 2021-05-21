@@ -7,6 +7,18 @@
     android:background="@color/onPrimary">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAddNewClanMember"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_clan_member"
+        android:textColor="@color/secondary"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:padding="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +27,6 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="?android:attr/actionBarSize"
         android:padding="16dp"/>
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 package com.blakdragon.petscapeclan.models.enums
 
-enum class Pet {
+enum class PetType {
     AbyssalOrphan,
     BabyMole,
     CallistoCub,
