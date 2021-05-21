@@ -1,9 +1,11 @@
 package com.blakdragon.petscapeclan.ui.fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MediatorLiveData
@@ -43,23 +45,32 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.bJoinDate.setOnClickListener { pickDate() }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+    private fun pickDate() {
+        val currentDate = viewModel.joinDate.value ?: LocalDate.now()
+
+        DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
+            viewModel.joinDate.value = LocalDate.of(year, month + 1, dayOfMonth)
+        }, currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth).show()
+    }
 }
 
 class AddClanMemberViewModel : ViewModel() {
 
     val runescapeName = MutableLiveData("")
+    val joinDate = MutableLiveData(LocalDate.now())
     val joinDateString = MediatorLiveData<String>()
     val bossKc = MediatorLiveData<String>()
 
     val hiscoresLoading = MutableLiveData(false)
 
-    private val joinDate = MutableLiveData(LocalDate.now())
     private val wiseOldManPlayer = MediatorLiveData<WiseOldManPlayer>()
 
     private var hiscoresJob: Job? = null
