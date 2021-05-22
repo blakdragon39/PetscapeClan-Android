@@ -10,11 +10,13 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.databinding.FragmentClanMemberBinding
 import com.blakdragon.petscapeclan.models.ClanMember
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
+import com.blakdragon.petscapeclan.ui.fragments.TextAdapter
 
 class ClanMemberFragment : BaseFragment<MainActivity>() {
 
@@ -35,6 +37,12 @@ class ClanMemberFragment : BaseFragment<MainActivity>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.clanMember.value = args.clanMember
+
+        binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPets.adapter = TextAdapter(args.clanMember.pets.map { getString(it.type.displayNameId) })
+
+        binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAchievements.adapter = TextAdapter(args.clanMember.achievements.map { getString(it.type.labelId) })
     }
 
     override fun onDestroy() {
