@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.databinding.CellSelectableTextBinding
 
-class SelectableAdapter(
-    private val selectables: List<SelectableObject>,
-    private val onObjectSelected: (Any, Boolean) -> Unit
-) : RecyclerView.Adapter<SelectableAdapter.PetViewHolder>() {
+class SelectableAdapter<T>(
+    private val selectables: List<SelectableObject<T>>,
+    private val onObjectSelected: (T, Boolean) -> Unit
+) : RecyclerView.Adapter<SelectableAdapter<T>.PetViewHolder>() {
 
     override fun getItemCount(): Int = selectables.size
 
@@ -21,7 +21,7 @@ class SelectableAdapter(
 
     inner class PetViewHolder(private val binding: CellSelectableTextBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bindView(selectable: SelectableObject, position: Int) {
+        fun bindView(selectable: SelectableObject<T>, position: Int) {
             binding.tvTitle.text = selectable.text
             binding.tvTitle.isSelected = selectable.isSelected
 
@@ -37,8 +37,8 @@ class SelectableAdapter(
     }
 }
 
-class SelectableObject(
-    val `object`: Any,
+class SelectableObject<T>(
+    val `object`: T,
     val text: String,
     var isSelected: Boolean = false
 )

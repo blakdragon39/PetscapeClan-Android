@@ -71,15 +71,15 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
     private fun initPets() {
         binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
         binding.rvPets.adapter = SelectableAdapter(
-            PetType.values().map { Pet(it) }.map { SelectableObject(it, getString(it.type.displayNameId)) })
-            { pet, selected -> onPetSelected(pet as Pet, selected) }
+            PetType.values().map { Pet(it) }.map { SelectableObject(it, getString(it.type.displayNameId)) },
+            this::onPetSelected)
     }
 
     private fun initAchievements() {
         binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
         binding.rvAchievements.adapter = SelectableAdapter(
-            AchievementType.values().map { Achievement(it) }.map { SelectableObject(it, getString(it.type.labelId)) })
-            { achievement, selected -> onAchievementSelected(achievement as Achievement, selected)}
+            AchievementType.values().map { Achievement(it) }.map { SelectableObject(it, getString(it.type.labelId)) },
+            this::onAchievementSelected)
     }
 
     private fun pickDate() {
