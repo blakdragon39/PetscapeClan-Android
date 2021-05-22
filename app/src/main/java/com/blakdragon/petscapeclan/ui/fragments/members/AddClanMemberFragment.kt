@@ -120,7 +120,7 @@ class AddClanMemberViewModel : ViewModel() {
     val achievements = MutableLiveData<List<Achievement>>()
 
     val joinDateString = MediatorLiveData<String>()
-    val bossKc = MediatorLiveData<String>()
+    val bossKc = MediatorLiveData<Int>()
 
     val hiscoresLoading = MutableLiveData(false)
     val addClanMemberLoading = MutableLiveData(false)
@@ -134,7 +134,7 @@ class AddClanMemberViewModel : ViewModel() {
     init {
         joinDateString.addSource(joinDate) { date -> joinDateString.value = date.toString("MMM dd, yyyy") }
         wiseOldManPlayer.addSource(runescapeName) { startHiscoresJob() }
-        bossKc.addSource(wiseOldManPlayer) { player -> bossKc.value = player.totalBossKc().toString() }
+        bossKc.addSource(wiseOldManPlayer) { player -> bossKc.value = player.totalBossKc() }
     }
 
     fun addClanMember() = viewModelScope.launch {
@@ -146,6 +146,7 @@ class AddClanMemberViewModel : ViewModel() {
                     runescapeName = runescapeName.value!!,
                     rank = rank.value!!,
                     joinDate = joinDate.value!!,
+                    bossKc = bossKc.value!!,
                     pets = pets.value ?: emptyList(),
                     achievements = achievements.value ?: emptyList()
                 )

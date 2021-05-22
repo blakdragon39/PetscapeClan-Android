@@ -12,11 +12,24 @@
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.blakdragon.petscapeclan.ui.fragments.HomeFragment"
-        android:label="homeFragment"/>
+        android:label="homeFragment">
+        <action
+            android:id="@+id/toClanMember"
+            app:destination="@id/fragmentClanMember"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentAddClanMember"
         android:name="com.blakdragon.petscapeclan.ui.fragments.members.AddClanMemberFragment"
         android:label="addClanMemberFragment"/>
+
+    <fragment
+        android:id="@+id/fragmentClanMember"
+        android:name="com.blakdragon.petscapeclan.ui.fragments.members.ClanMemberFragment"
+        android:label="clanMemberFragment">
+        <argument
+            android:name="clanMember"
+            app:argType="com.blakdragon.petscapeclan.models.ClanMember"/>
+    </fragment>
 
 </navigation>

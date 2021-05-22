@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
@@ -66,9 +67,8 @@ class HomeFragment : BaseFragment<MainActivity>() {
         binding.rvClanMembers.adapter = ClanMemberAdapter(clanMembers, this::onClanMemberClick)
     }
 
-
     private fun onClanMemberClick(clanMember: ClanMember) {
-
+        findNavController().navigate(HomeFragmentDirections.toClanMember(clanMember))
     }
 }
 
