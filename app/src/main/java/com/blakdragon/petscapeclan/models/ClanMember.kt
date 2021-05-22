@@ -13,14 +13,15 @@ class ClanMember(
     val joinDate: LocalDate,
     val bossKc: Int,
     val pets: List<Pet>,
-    val achievements: List<Achievement>
+    val achievements: List<Achievement>,
+    val points: Int,
 ) : Parcelable
 
-class AddClanMemberRequest(
+class ClanMemberRequest(
+    val id: String? = null,
     val runescapeName: String,
     val rank: Rank,
     val joinDate: LocalDate,
-    val bossKc: Int,
     val pets: List<Pet>,
     val achievements: List<Achievement>
 )

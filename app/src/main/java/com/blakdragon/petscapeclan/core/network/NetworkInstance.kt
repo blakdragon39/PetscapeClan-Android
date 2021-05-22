@@ -11,11 +11,7 @@ object NetworkInstance {
 
     private const val BASE_URL = "http://10.0.2.2:8080/" //todo flavours
 
-    private const val WISE_OLD_MAN_URL = "https://api.wiseoldman.net/"
-
     val API: PetscapeAPI
-
-    val wiseOldManAPI: WiseOldManAPI
 
     init {
         val okHttpClientBuilder = OkHttpClient.Builder()
@@ -29,12 +25,6 @@ object NetworkInstance {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build().create(PetscapeAPI::class.java)
-
-        wiseOldManAPI = Retrofit.Builder()
-            .baseUrl(WISE_OLD_MAN_URL)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .client(okHttpClient)
-            .build().create(WiseOldManAPI::class.java)
     }
 
     private fun addLogger(builder: OkHttpClient.Builder) {

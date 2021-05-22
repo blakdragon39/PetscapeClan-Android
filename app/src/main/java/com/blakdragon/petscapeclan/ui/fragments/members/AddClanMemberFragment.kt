@@ -21,11 +21,8 @@ import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.ui.fragments.RankPopup
 import com.blakdragon.petscapeclan.utils.toString
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
 
 class AddClanMemberFragment: BaseFragment<MainActivity>() {
@@ -120,21 +117,15 @@ class AddClanMemberViewModel : ViewModel() {
     val achievements = MutableLiveData<List<Achievement>>()
 
     val joinDateString = MediatorLiveData<String>()
-    val bossKc = MediatorLiveData<Int>()
 
-    val hiscoresLoading = MutableLiveData(false)
     val addClanMemberLoading = MutableLiveData(false)
 
     val addClanMemberResult = MutableLiveData<NetworkResult<ClanMember>>()
-
-    private val wiseOldManPlayer = MediatorLiveData<WiseOldManPlayer>()
 
     private var hiscoresJob: Job? = null
 
     init {
         joinDateString.addSource(joinDate) { date -> joinDateString.value = date.toString("MMM dd, yyyy") }
-        wiseOldManPlayer.addSource(runescapeName) { startHiscoresJob() }
-        bossKc.addSource(wiseOldManPlayer) { player -> bossKc.value = player.totalBossKc() }
     }
 
     fun addClanMember() = viewModelScope.launch {
@@ -142,13 +133,12 @@ class AddClanMemberViewModel : ViewModel() {
 
         try {
             val response = NetworkInstance.API.addClanMember(
-                AddClanMemberRequest(
+                ClanMemberRequest(
                     runescapeName = runescapeName.value!!,
                     rank = rank.value!!,
                     joinDate = joinDate.value!!,
-                    bossKc = bossKc.value!!,
                     pets = pets.value ?: emptyList(),
-                    achievements = achievements.value ?: emptyList()
+                    achievements = achievements.value ?: emptyList(),
                 )
             )
 
@@ -158,27 +148,5 @@ class AddClanMemberViewModel : ViewModel() {
         }
 
         addClanMemberLoading.value = false
-    }
-
-    private fun startHiscoresJob() = viewModelScope.launch {
-        hiscoresJob?.cancel()
-        delay(2000)
-
-        if (runescapeName.value.isNullOrEmpty().not()) {
-            hiscoresJob = loadHiScores()
-        }
-    }
-
-    private fun loadHiScores() = viewModelScope.launch {
-        hiscoresLoading.value = true
-
-        try {
-            wiseOldManPlayer.value = NetworkInstance.wiseOldManAPI.getPlayer(runescapeName.value!!) //todo check age
-        } catch (e: CancellationException) {
-        } catch (e: Exception) {
-            Timber.i(e)
-        }
-
-        hiscoresLoading.value = false
     }
 }
