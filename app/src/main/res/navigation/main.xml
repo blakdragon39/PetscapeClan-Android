@@ -7,7 +7,7 @@
 
     <action
         android:id="@+id/to_addClanMember"
-        app:destination="@id/fragmentAddClanMember"/>
+        app:destination="@id/fragmentAddEditClanMember"/>
 
     <fragment
         android:id="@+id/fragmentHome"
@@ -19,9 +19,20 @@
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentAddClanMember"
-        android:name="com.blakdragon.petscapeclan.ui.fragments.members.AddClanMemberFragment"
-        android:label="addClanMemberFragment"/>
+        android:id="@+id/fragmentAddEditClanMember"
+        android:name="com.blakdragon.petscapeclan.ui.fragments.members.AddEditClanMemberFragment"
+        android:label="addClanMemberFragment">
+        <argument
+            android:name="clanMember"
+            app:argType="com.blakdragon.petscapeclan.models.ClanMember"
+            app:nullable="true"/>
+
+        <action
+            android:id="@+id/toClanMember"
+            app:destination="@id/fragmentClanMember"
+            app:popUpTo="@id/fragmentClanMember"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentClanMember"
@@ -30,6 +41,10 @@
         <argument
             android:name="clanMember"
             app:argType="com.blakdragon.petscapeclan.models.ClanMember"/>
+
+        <action
+            android:id="@+id/toEditClanMember"
+            app:destination="@id/fragmentAddEditClanMember"/>
     </fragment>
 
 </navigation>

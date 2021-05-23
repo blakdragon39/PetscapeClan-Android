@@ -7,4 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class Achievement(
     val type: AchievementType
-) : Parcelable
+) : Parcelable {
+
+    override fun equals(other: Any?): Boolean = (other as? Achievement)?.type == type
+
+    override fun hashCode(): Int = type.hashCode()
+}

@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.blakdragon.petscapeclan.ui.fragments.members.AddClanMemberViewModel"/>
+            type="com.blakdragon.petscapeclan.ui.fragments.members.AddEditClanMemberViewModel"/>
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -120,7 +120,7 @@
                 android:layout_margin="16dp"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/submit"
-                android:onClick="@{() -> viewModel.addClanMember()}"
+                android:onClick="@{() -> viewModel.addUpdateClanMember()}"
                 android:visibility="@{viewModel.addClanMemberLoading ? View.GONE : View.VISIBLE}"/>
 
             <ProgressBar

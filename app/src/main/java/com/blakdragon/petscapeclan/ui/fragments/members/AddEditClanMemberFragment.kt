@@ -9,10 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
-import com.blakdragon.petscapeclan.databinding.FragmentAddClanMemberBinding
+import com.blakdragon.petscapeclan.databinding.FragmentAddEditClanMemberBinding
 import com.blakdragon.petscapeclan.models.*
 import com.blakdragon.petscapeclan.models.enums.AchievementType
 import com.blakdragon.petscapeclan.models.enums.PetType
@@ -21,20 +22,21 @@ import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.ui.fragments.RankPopup
 import com.blakdragon.petscapeclan.utils.toString
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 
-class AddClanMemberFragment: BaseFragment<MainActivity>() {
+class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
 
-    private var _binding: FragmentAddClanMemberBinding? = null
-    private val binding: FragmentAddClanMemberBinding
+    private var _binding: FragmentAddEditClanMemberBinding? = null
+    private val binding: FragmentAddEditClanMemberBinding
         get() = _binding!!
 
-    private val viewModel: AddClanMemberViewModel by viewModels()
+    private val viewModel: AddEditClanMemberViewModel by viewModels()
+    private val args: AddEditClanMemberFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_clan_member, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit_clan_member, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -45,14 +47,15 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
         super.onViewCreated(view, savedInstanceState)
         binding.bJoinDate.setOnClickListener { pickDate() }
         binding.ivRank.setOnClickListener { pickRank() }
-        
+
+        initModel()
         initPets()
         initAchievements()
 
         viewModel.addClanMemberResult.observe(viewLifecycleOwner, Observer { result ->
             if (!result.handled) {
                 if (result.isSuccessful) {
-                    findNavController().popBackStack()
+                    findNavController().navigate(AddEditClanMemberFragmentDirections.toClanMember(result.getUnhandledData()))
                 } else {
                     parentActivity.handleError(result.getUnhandledException())
                 }
@@ -65,18 +68,30 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
         _binding = null
     }
 
+    private fun initModel() {
+        viewModel.clanMember.value = args.clanMember
+        viewModel.runescapeName.value = args.clanMember?.runescapeName
+        viewModel.joinDate.value = args.clanMember?.joinDate
+        viewModel.rank.value = args.clanMember?.rank
+        viewModel.pets.value = args.clanMember?.pets
+        viewModel.achievements.value = args.clanMember?.achievements
+    }
+
     private fun initPets() {
+        val selectables = PetType.values()
+            .map { Pet(it) }
+            .map { pet -> SelectableObject(pet, getString(pet.type.displayNameId), isSelected = args.clanMember?.pets?.contains(pet) == true) }
+
         binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPets.adapter = SelectableAdapter(
-            PetType.values().map { Pet(it) }.map { SelectableObject(it, getString(it.type.displayNameId)) },
-            this::onPetSelected)
+        binding.rvPets.adapter = SelectableAdapter(selectables, this::onPetSelected)
     }
 
     private fun initAchievements() {
+        val selectables = AchievementType.values()
+            .map { Achievement(it) }
+            .map { achievement -> SelectableObject(achievement, getString(achievement.type.labelId), isSelected = args.clanMember?.achievements?.contains(achievement) == true) }
         binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvAchievements.adapter = SelectableAdapter(
-            AchievementType.values().map { Achievement(it) }.map { SelectableObject(it, getString(it.type.labelId)) },
-            this::onAchievementSelected)
+        binding.rvAchievements.adapter = SelectableAdapter(selectables, this::onAchievementSelected)
     }
 
     private fun pickDate() {
@@ -108,11 +123,13 @@ class AddClanMemberFragment: BaseFragment<MainActivity>() {
     }
 }
 
-class AddClanMemberViewModel : ViewModel() {
+class AddEditClanMemberViewModel : ViewModel() {
 
-    val runescapeName = MutableLiveData("")
-    val joinDate = MutableLiveData(LocalDate.now())
-    val rank = MutableLiveData(Rank.Bronze)
+    val clanMember = MutableLiveData<ClanMember>()
+
+    val runescapeName = MutableLiveData<String>("")
+    val joinDate = MutableLiveData<LocalDate>(LocalDate.now())
+    val rank = MutableLiveData<Rank>(Rank.Bronze)
     val pets = MutableLiveData<List<Pet>>()
     val achievements = MutableLiveData<List<Achievement>>()
 
@@ -122,25 +139,24 @@ class AddClanMemberViewModel : ViewModel() {
 
     val addClanMemberResult = MutableLiveData<NetworkResult<ClanMember>>()
 
-    private var hiscoresJob: Job? = null
-
     init {
         joinDateString.addSource(joinDate) { date -> joinDateString.value = date.toString("MMM dd, yyyy") }
     }
 
-    fun addClanMember() = viewModelScope.launch {
+    fun addUpdateClanMember() = viewModelScope.launch {
         addClanMemberLoading.value = true
 
         try {
-            val response = NetworkInstance.API.addClanMember(
-                ClanMemberRequest(
-                    runescapeName = runescapeName.value!!,
-                    rank = rank.value!!,
-                    joinDate = joinDate.value!!,
-                    pets = pets.value ?: emptyList(),
-                    achievements = achievements.value ?: emptyList(),
-                )
+            val request = ClanMemberRequest(
+                id = clanMember.value?.id,
+                runescapeName = runescapeName.value!!,
+                rank = rank.value!!,
+                joinDate = joinDate.value!!,
+                pets = pets.value ?: emptyList(),
+                achievements = achievements.value ?: emptyList(),
             )
+
+            val response = if (clanMember.value == null) NetworkInstance.API.addClanMember(request) else NetworkInstance.API.updateClanMember(request)
 
             addClanMemberResult.value = NetworkResult(data = response)
         } catch (e: Exception) {

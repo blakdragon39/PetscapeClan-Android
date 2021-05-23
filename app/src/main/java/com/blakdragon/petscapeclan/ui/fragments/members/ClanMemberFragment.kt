@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
@@ -43,6 +44,8 @@ class ClanMemberFragment : BaseFragment<MainActivity>() {
 
         binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
         binding.rvAchievements.adapter = TextAdapter(args.clanMember.achievements.map { getString(it.type.labelId) })
+
+        binding.ivEdit.setOnClickListener { findNavController().navigate(ClanMemberFragmentDirections.toEditClanMember(args.clanMember)) }
     }
 
     override fun onDestroy() {

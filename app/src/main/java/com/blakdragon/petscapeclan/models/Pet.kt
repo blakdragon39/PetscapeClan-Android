@@ -7,4 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class Pet(
     val type: PetType
-) : Parcelable
+) : Parcelable {
+
+    override fun equals(other: Any?): Boolean = (other as? Pet)?.type == type
+
+    override fun hashCode(): Int = type.hashCode()
+}

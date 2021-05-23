@@ -7,10 +7,7 @@ import com.blakdragon.petscapeclan.core.network.requests.LoginRequest
 import com.blakdragon.petscapeclan.core.network.requests.RegisterRequest
 import com.blakdragon.petscapeclan.models.ClanMemberRequest
 import com.blakdragon.petscapeclan.models.ClanMember
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface PetscapeAPI {
 
@@ -30,6 +27,12 @@ interface PetscapeAPI {
 
     @POST("api/clanMembers")
     suspend fun addClanMember(
+        @Body request: ClanMemberRequest,
+        @Header("Authorization") token: String? = PetscapePrefs.user?.token
+    ) : ClanMember
+
+    @PUT("api/clanMembers")
+    suspend fun updateClanMember(
         @Body request: ClanMemberRequest,
         @Header("Authorization") token: String? = PetscapePrefs.user?.token
     ) : ClanMember
