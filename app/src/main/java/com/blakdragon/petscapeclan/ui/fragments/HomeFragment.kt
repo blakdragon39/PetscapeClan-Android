@@ -93,7 +93,9 @@ class HomeViewModel : ViewModel() {
             val response = NetworkInstance.API.getClanMembers()
             clanMembersResult.value = NetworkResult(data = response)
 
-            clanMembers.value = response.sortedBy { it.runescapeName }
+            clanMembers.value = response
+                .sortedBy { it.runescapeName.lowercase() }
+                .sortedBy { it.rank.ordinal }
         } catch (e: Exception) {
             clanMembersResult.value = NetworkResult(exception  = e)
         }
