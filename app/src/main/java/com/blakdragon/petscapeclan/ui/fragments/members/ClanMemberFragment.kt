@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.databinding.FragmentClanMemberBinding
 import com.blakdragon.petscapeclan.models.ClanMember
+import com.blakdragon.petscapeclan.models.enums.AchievementType
+import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.ui.fragments.TextAdapter
@@ -61,9 +64,17 @@ class ClanMemberViewModel : ViewModel() {
     val bossKc = MediatorLiveData<Int>()
     val points = MediatorLiveData<Int>()
 
+    val pets = MediatorLiveData<Int>()
+    val totalPets: LiveData<Int> = MutableLiveData(PetType.values().size)
+
+    val achievements = MediatorLiveData<Int>()
+    val totalAchievements: LiveData<Int> = MutableLiveData(AchievementType.values().size)
+
     init {
         bossKc.addSource(clanMember) { bossKc.value = clanMember.value?.bossKc }
         points.addSource(clanMember) { points.value = clanMember.value?.points }
+        pets.addSource(clanMember) { pets.value = clanMember.value?.pets?.size }
+        achievements.addSource(clanMember) { achievements.value = clanMember.value?.achievements?.size }
     }
 
 }

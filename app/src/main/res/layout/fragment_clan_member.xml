@@ -122,13 +122,40 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/member_pets"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:gravity="bottom">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/member_pets"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.pets.toString()}"
+                    android:layout_marginStart="12dp"
+                    tools:text="15"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:layout_marginStart="4dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.totalPets.toString()}"
+                    android:layout_marginStart="4dp"
+                    tools:text="15"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -146,13 +173,40 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/member_achievements"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:gravity="bottom">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/member_achievements"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.achievements.toString()}"
+                    android:layout_marginStart="12dp"
+                    tools:text="15"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:layout_marginStart="4dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.totalAchievements.toString()}"
+                    android:layout_marginStart="4dp"
+                    tools:text="15"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
