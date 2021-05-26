@@ -23,7 +23,6 @@ import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.ui.fragments.RankPopup
 import com.blakdragon.petscapeclan.utils.toString
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
 
 class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
@@ -69,12 +68,14 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
     }
 
     private fun initModel() {
-        viewModel.clanMember.value = args.clanMember
-        viewModel.runescapeName.value = args.clanMember?.runescapeName
-        viewModel.joinDate.value = args.clanMember?.joinDate
-        viewModel.rank.value = args.clanMember?.rank
-        viewModel.pets.value = args.clanMember?.pets
-        viewModel.achievements.value = args.clanMember?.achievements
+        args.clanMember?.let { clanMember ->
+            viewModel.clanMember.value = clanMember
+            viewModel.runescapeName.value = clanMember.runescapeName
+            viewModel.joinDate.value = clanMember.joinDate
+            viewModel.rank.value = clanMember.rank
+            viewModel.pets.value = clanMember.pets
+            viewModel.achievements.value = clanMember.achievements
+        }
     }
 
     private fun initPets() {

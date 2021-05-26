@@ -25,6 +25,7 @@
         <argument
             android:name="clanMember"
             app:argType="com.blakdragon.petscapeclan.models.ClanMember"
+            android:defaultValue="@null"
             app:nullable="true"/>
 
         <action
