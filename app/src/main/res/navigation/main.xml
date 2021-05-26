@@ -31,8 +31,7 @@
         <action
             android:id="@+id/toClanMember"
             app:destination="@id/fragmentClanMember"
-            app:popUpTo="@id/fragmentClanMember"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/fragmentHome"/>
     </fragment>
 
     <fragment

@@ -4,6 +4,9 @@
     <string name="error">Error</string>
     <string name="network_error">Something went wrong - try again later</string>
 
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>

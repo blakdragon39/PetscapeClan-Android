@@ -2,7 +2,9 @@ package com.blakdragon.petscapeclan.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +26,8 @@ class MainActivity : BaseActivity() {
         binding.lifecycleOwner = this
 
         binding.toolbar.binding.ivMenu.setOnClickListener { toggleDrawer() }
+
+        initDrawer()
     }
 
     fun logout() {
@@ -32,6 +36,22 @@ class MainActivity : BaseActivity() {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
+    }
+
+    private fun initDrawer() {
+        val drawerToggle = object : ActionBarDrawerToggle(this, binding.drawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+                viewModel.drawerOpen.value = false
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                viewModel.drawerOpen.value = true
+            }
+        }
+
+        binding.drawerLayout.addDrawerListener(drawerToggle)
     }
 
     fun toggleDrawer() {
