@@ -98,18 +98,30 @@
     <string name="achievement_achievement_cape">Achievement Cape</string>
     <string name="achievement_music_cape">Music Cape</string>
     <string name="achievement_champions_cape">Champion\'s Cape</string>
-    <string name="achievement_inferncal_cape">Infernal Cape</string>
-    <string name="achievement_xerics_guard">Xerics Guard</string>
-    <string name="achievement_xerics_warrior">Xerics Warrior</string>
-    <string name="achievement_xerics_sentinal">Xerics Sentinal</string>
-    <string name="achievement_xerics_general">Xerics General</string>
-    <string name="achievement_xerics_champion">Xerics Champion</string>
-    <string name="achievement_sinhaza_shroud_1">Sinhaza Shroud 1</string>
-    <string name="achievement_sinhaza_shroud_2">Sinhaza Shroud 2</string>
-    <string name="achievement_sinhaza_shroud_3">Sinhaza Shroud 3</string>
-    <string name="achievement_sinhaza_shroud_4">Sinhaza Shroud 4</string>
-    <string name="achievement_sinhaza_shroud_5">Sinhaza Shroud 5</string>
-    <string name="achievement_ironman">Ironman</string>
-    <string name="achievement_ultimate_ironman">Ultimate Ironman</string>
+    <string name="achievement_infernal_cape">Infernal Cape</string>
+    <string name="achievement_xerics_cape">Xerics Cape</string>
+    <string name="achievement_sinhaza_shroud">Sinhaza Shroud</string>
+    <string name="achievement_slayer_helm_set">Slayer Helmet Set</string>
+
+    <string name="achievement_transmog_dark_acorn">Dark Acorn Squirrel Transmog</string>
+    <string name="achievement_transmog_metamorphic_dust">Metamorphic Dust Olmlet Transmog</string>
+    <string name="achievement_transmog_6Jads">TzHaar-Ket-Rak\'s Challenges Jad Transmog</string>
+    <string name="achievement_transmog_blue_heron">Blue Heron Transmog</string>
+    <string name="achievement_transmog_sraracha">Srarach Transmogs</string>
+
+    <string name="achievement_clues_600_beginner">600 Beginner Clues</string>
+    <string name="achievement_clues_500_easy">500 Easy Clues</string>
+    <string name="achievement_clues_400_medium">400 Medium Clues</string>
+    <string name="achievement_clues_300_hard">300 Hard Clues</string>
+    <string name="achievement_clues_200_elite">200 Elite Clues</string>
+    <string name="achievement_clues_100_master">100 Master Clues</string>
+
+    <string name="achievement_skill_50m_exp">50m Exp in a Skill</string>
+    <string name="achievement_skill_100m_exp">100m Exp in a Skill</string>
+    <string name="achievement_skill_200m_exp">200m Exp in a Skill</string>
+
+    <string name="achievement_collection_log_250">250 Collection Log Slots</string>
+    <string name="achievement_collection_log_500">500 Collection Log Slots</string>
+    <string name="achievement_collection_log_1000">1000  Collection Log Slots</string>
 
 </resources>
