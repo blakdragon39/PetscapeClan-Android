@@ -59,9 +59,11 @@ class ClanMemberViewModel : ViewModel() {
     val clanMember = MutableLiveData<ClanMember>()
 
     val bossKc = MediatorLiveData<Int>()
+    val points = MediatorLiveData<Int>()
 
     init {
         bossKc.addSource(clanMember) { bossKc.value = clanMember.value?.bossKc }
+        points.addSource(clanMember) { points.value = clanMember.value?.points }
     }
 
 }

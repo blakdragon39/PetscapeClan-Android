@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object NetworkInstance {
 
-    private const val BASE_URL = "http://10.0.2.2:8080/" //todo flavours
+    private const val BASE_URL = "http://134.122.34.238:8080/" //todo flavours
 
     val API: PetscapeAPI
 
