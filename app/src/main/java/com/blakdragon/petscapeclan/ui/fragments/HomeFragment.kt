@@ -28,6 +28,8 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
     private val viewModel: HomeViewModel by viewModels()
 
+    private lateinit var adapter: ClanMemberAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.viewModel = viewModel
@@ -41,15 +43,11 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
         binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
 
-        viewModel.clanMembersResult.observe(viewLifecycleOwner) { result ->
-            if (!result.handled) {
-                if (result.isSuccessful) {
-                    initClanMembers(result.getUnhandledData())
-                } else {
-                    parentActivity.handleError(result.getUnhandledException())
-                }
-            }
-        }
+        adapter = ClanMemberAdapter(this::onClanMemberClick)
+        binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvClanMembers.adapter = adapter
+
+        observeViewModel()
     }
 
     override fun onResume() {
@@ -62,9 +60,18 @@ class HomeFragment : BaseFragment<MainActivity>() {
         _binding = null
     }
 
-    private fun initClanMembers(clanMembers: List<ClanMember>) {
-        binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvClanMembers.adapter = ClanMemberAdapter(clanMembers, this::onClanMemberClick)
+    private fun observeViewModel() {
+        viewModel.clanMembersResult.observe(viewLifecycleOwner) { result ->
+            if (!result.handled) {
+                if (!result.isSuccessful) {
+                    parentActivity.handleError(result.getUnhandledException())
+                }
+            }
+        }
+
+        viewModel.clanMembers.observe(viewLifecycleOwner) { clanMembers ->
+            adapter.setClanMembers(clanMembers)
+        }
     }
 
     private fun onClanMemberClick(clanMember: ClanMember) {
@@ -77,12 +84,16 @@ class HomeViewModel : ViewModel() {
     val clanMembersLoading = MutableLiveData(false)
     val clanMembersResult = MutableLiveData<NetworkResult<List<ClanMember>>>()
 
+    val clanMembers = MutableLiveData<List<ClanMember>>()
+
     fun getClanMembers() = viewModelScope.launch {
         clanMembersLoading.value = true
 
         try {
             val response = NetworkInstance.API.getClanMembers()
             clanMembersResult.value = NetworkResult(data = response)
+
+            clanMembers.value = response.sortedBy { it.runescapeName }
         } catch (e: Exception) {
             clanMembersResult.value = NetworkResult(exception  = e)
         }

@@ -5,7 +5,7 @@ import com.blakdragon.petscapeclan.models.enums.AchievementType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class Achievement(
+data class Achievement(
     val type: AchievementType
 ) : Parcelable {
 

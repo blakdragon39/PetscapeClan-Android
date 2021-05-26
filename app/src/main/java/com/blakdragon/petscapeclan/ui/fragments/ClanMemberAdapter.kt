@@ -2,14 +2,24 @@ package com.blakdragon.petscapeclan.ui.fragments
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.blakdragon.petscapeclan.databinding.CellClanMemberBinding
 import com.blakdragon.petscapeclan.models.ClanMember
+import com.blakdragon.petscapeclan.models.ClanMemberDiffUtil
 
 class ClanMemberAdapter(
-    private val clanMembers: List<ClanMember>,
     private val onClanMemberClick: (ClanMember) -> Unit
 ) : RecyclerView.Adapter<ClanMemberAdapter.ClanMemberViewHolder>() {
+
+    private var clanMembers: List<ClanMember> = listOf()
+
+    fun setClanMembers(newClanMembers: List<ClanMember>) {
+        val result = DiffUtil.calculateDiff(ClanMemberDiffUtil(clanMembers, newClanMembers))
+        result.dispatchUpdatesTo(this)
+
+        clanMembers = newClanMembers
+    }
 
     override fun getItemCount(): Int = clanMembers.size
 
