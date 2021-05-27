@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeclan.ui.fragments
+package com.blakdragon.petscapeclan.ui.fragments.members
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +10,10 @@ class RankPopup {
 
     private var popup: PopupWindow? = null
 
-    fun show(view: View, onRankClick: (Rank) -> Unit): PopupWindow {
+    fun show(view: View, onRankClick: (Rank) -> Unit) {
         val binding = PopupRankBinding.inflate(LayoutInflater.from(view.context))
 
-        return PopupWindow(view.context).apply {
+        PopupWindow(view.context).apply {
             binding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
             contentView = binding.root
@@ -37,7 +37,5 @@ class RankPopup {
         }
     }
 
-    fun dismiss() {
-        popup?.dismiss()
-    }
+    fun dismiss() = popup?.dismiss()
 }

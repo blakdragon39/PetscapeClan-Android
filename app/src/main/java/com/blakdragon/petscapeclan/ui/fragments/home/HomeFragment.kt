@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeclan.ui.fragments
+package com.blakdragon.petscapeclan.ui.fragments.home
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -19,6 +19,7 @@ import com.blakdragon.petscapeclan.models.ClanMember
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeFragment : BaseFragment<MainActivity>() {
 
@@ -42,6 +43,7 @@ class HomeFragment : BaseFragment<MainActivity>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
+        binding.ivFilters.setOnClickListener { FilterPopup().show(it, viewModel) }
 
         adapter = ClanMemberAdapter(this::onClanMemberClick, this::onClanMemberLongClick)
         binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
@@ -63,6 +65,8 @@ class HomeFragment : BaseFragment<MainActivity>() {
     private fun observeViewModel() {
         viewModel.exception.observe(viewLifecycleOwner) { parentActivity.handleError(it) }
         viewModel.clanMembers.observe(viewLifecycleOwner, adapter::setClanMembers)
+
+        viewModel.filterNotSeenToday.observe(viewLifecycleOwner) { Timber.i("LAST SEEN $it") }
     }
 
     private fun onClanMemberClick(clanMember: ClanMember) {
@@ -85,6 +89,8 @@ class HomeViewModel : ViewModel() {
     val clanMembers = MutableLiveData<List<ClanMember>>()
 
     val exception = MutableLiveData<Exception>()
+
+    val filterNotSeenToday = MutableLiveData(false)
 
     fun getClanMembers() = viewModelScope.launch {
         clanMembersLoading.value = true

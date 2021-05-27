@@ -6,32 +6,58 @@
     <data>
         <variable
             name="viewModel"
-            type="com.blakdragon.petscapeclan.ui.fragments.HomeViewModel" />
+            type="com.blakdragon.petscapeclan.ui.fragments.home.HomeViewModel" />
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshClanMembers"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:padding="16dp"
-        app:refreshing="@{viewModel.clanMembersLoading}">
+        android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/filtering"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            app:cardBackgroundColor="@color/onPrimary"
-            app:cardCornerRadius="16dp">
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:gravity="end"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvClanMembers"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivFilters"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_filter"
+                android:tint="@color/onPrimary"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshClanMembers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="16dp"
+            app:refreshing="@{viewModel.clanMembersLoading}"
+            app:layout_constraintTop_toBottomOf="@id/filtering"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/cell_clan_member"/>
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/onPrimary"
+                app:cardCornerRadius="16dp">
 
-        </androidx.cardview.widget.CardView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvClanMembers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/cell_clan_member"/>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.databinding.DrawerBinding
 import com.blakdragon.petscapeclan.ui.MainActivity
-import com.blakdragon.petscapeclan.ui.fragments.HomeFragmentDirections
+
 
 class Drawer(c: Context, attrs: AttributeSet) : FrameLayout(c, attrs) {
 

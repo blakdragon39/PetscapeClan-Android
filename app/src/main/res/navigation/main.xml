@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.blakdragon.petscapeclan.ui.fragments.HomeFragment"
+        android:name="com.blakdragon.petscapeclan.ui.fragments.home.HomeFragment"
         android:label="homeFragment">
         <action
             android:id="@+id/toClanMember"

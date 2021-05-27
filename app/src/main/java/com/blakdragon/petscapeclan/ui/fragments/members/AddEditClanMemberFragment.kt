@@ -20,7 +20,6 @@ import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.models.enums.Rank
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
-import com.blakdragon.petscapeclan.ui.fragments.RankPopup
 import com.blakdragon.petscapeclan.utils.toString
 import kotlinx.coroutines.launch
 import java.time.LocalDate

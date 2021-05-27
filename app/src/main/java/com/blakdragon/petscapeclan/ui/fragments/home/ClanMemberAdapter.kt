@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeclan.ui.fragments
+package com.blakdragon.petscapeclan.ui.fragments.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
