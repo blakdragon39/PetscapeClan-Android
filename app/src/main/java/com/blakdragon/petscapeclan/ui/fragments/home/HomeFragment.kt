@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,7 @@ import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalDate
 
 class HomeFragment : BaseFragment<MainActivity>() {
 
@@ -64,7 +66,7 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
     private fun observeViewModel() {
         viewModel.exception.observe(viewLifecycleOwner) { parentActivity.handleError(it) }
-        viewModel.clanMembers.observe(viewLifecycleOwner, adapter::setClanMembers)
+        viewModel.filteredClanMembers.observe(viewLifecycleOwner) { if (it != null) adapter.setClanMembers(it) }
 
         viewModel.filterNotSeenToday.observe(viewLifecycleOwner) { Timber.i("LAST SEEN $it") }
     }
@@ -84,23 +86,25 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
 class HomeViewModel : ViewModel() {
 
-    val clanMembersLoading = MutableLiveData(false)
-
-    val clanMembers = MutableLiveData<List<ClanMember>>()
-
     val exception = MutableLiveData<Exception>()
+    val filteredClanMembers = MediatorLiveData<List<ClanMember>>()
 
     val filterNotSeenToday = MutableLiveData(false)
+
+    val clanMembersLoading = MutableLiveData(false)
+
+    private val clanMembers = MutableLiveData<List<ClanMember>>()
+
+    init {
+        filteredClanMembers.addSource(clanMembers) { filteredClanMembers.value = sortAndFilterClanMembers() }
+        filteredClanMembers.addSource(filterNotSeenToday) { filteredClanMembers.value = sortAndFilterClanMembers() }
+    }
 
     fun getClanMembers() = viewModelScope.launch {
         clanMembersLoading.value = true
 
         try {
-            val response = NetworkInstance.API.getClanMembers()
-
-            clanMembers.value = response
-                .sortedBy { it.runescapeName.lowercase() }
-                .sortedBy { it.rank.ordinal }
+            clanMembers.value = NetworkInstance.API.getClanMembers()
         } catch (e: Exception) {
             exception.value = e
         }
@@ -120,5 +124,18 @@ class HomeViewModel : ViewModel() {
         }
 
         clanMembersLoading.value = false
+    }
+
+    private fun sortAndFilterClanMembers(): List<ClanMember>? {
+        var returnMembers = clanMembers.value
+            ?.sortedBy { it.runescapeName.lowercase() }
+            ?.sortedBy { it.rank.ordinal }
+
+        if (filterNotSeenToday.value == true) {
+            val today = LocalDate.now()
+            returnMembers = returnMembers?.filter { it.lastSeen?.isBefore(today) != false }
+        }
+
+        return returnMembers
     }
 }

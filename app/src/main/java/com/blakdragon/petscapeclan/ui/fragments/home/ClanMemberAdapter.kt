@@ -17,9 +17,8 @@ class ClanMemberAdapter(
 
     fun setClanMembers(newClanMembers: List<ClanMember>) {
         val result = DiffUtil.calculateDiff(ClanMemberDiffUtil(clanMembers, newClanMembers))
-        result.dispatchUpdatesTo(this)
-
         clanMembers = newClanMembers
+        result.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int = clanMembers.size
