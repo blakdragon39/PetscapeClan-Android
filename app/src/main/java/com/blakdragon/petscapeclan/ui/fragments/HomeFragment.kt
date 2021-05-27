@@ -1,5 +1,6 @@
 package com.blakdragon.petscapeclan.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,6 @@ import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
 import com.blakdragon.petscapeclan.databinding.FragmentHomeBinding
 import com.blakdragon.petscapeclan.models.ClanMember
-import com.blakdragon.petscapeclan.models.NetworkResult
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import kotlinx.coroutines.launch
@@ -43,7 +43,7 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
         binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
 
-        adapter = ClanMemberAdapter(this::onClanMemberClick)
+        adapter = ClanMemberAdapter(this::onClanMemberClick, this::onClanMemberLongClick)
         binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
         binding.rvClanMembers.adapter = adapter
 
@@ -61,43 +61,56 @@ class HomeFragment : BaseFragment<MainActivity>() {
     }
 
     private fun observeViewModel() {
-        viewModel.clanMembersResult.observe(viewLifecycleOwner) { result ->
-            if (!result.handled) {
-                if (!result.isSuccessful) {
-                    parentActivity.handleError(result.getUnhandledException())
-                }
-            }
-        }
-
-        viewModel.clanMembers.observe(viewLifecycleOwner) { clanMembers ->
-            adapter.setClanMembers(clanMembers)
-        }
+        viewModel.exception.observe(viewLifecycleOwner) { parentActivity.handleError(it) }
+        viewModel.clanMembers.observe(viewLifecycleOwner, adapter::setClanMembers)
     }
 
     private fun onClanMemberClick(clanMember: ClanMember) {
         findNavController().navigate(HomeFragmentDirections.toClanMember(clanMember))
+    }
+
+    private fun onClanMemberLongClick(clanMember: ClanMember) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.home_update_last_seen)
+            .setPositiveButton(android.R.string.ok) { _, _ -> viewModel.updateLastSeenClanMember(clanMember) }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 }
 
 class HomeViewModel : ViewModel() {
 
     val clanMembersLoading = MutableLiveData(false)
-    val clanMembersResult = MutableLiveData<NetworkResult<List<ClanMember>>>()
 
     val clanMembers = MutableLiveData<List<ClanMember>>()
+
+    val exception = MutableLiveData<Exception>()
 
     fun getClanMembers() = viewModelScope.launch {
         clanMembersLoading.value = true
 
         try {
             val response = NetworkInstance.API.getClanMembers()
-            clanMembersResult.value = NetworkResult(data = response)
 
             clanMembers.value = response
                 .sortedBy { it.runescapeName.lowercase() }
                 .sortedBy { it.rank.ordinal }
         } catch (e: Exception) {
-            clanMembersResult.value = NetworkResult(exception  = e)
+            exception.value = e
+        }
+
+        clanMembersLoading.value = false
+    }
+
+    fun updateLastSeenClanMember(clanMember: ClanMember) = viewModelScope.launch {
+        clanMembersLoading.value = true
+
+        try {
+            val result = NetworkInstance.API.updateLastSeen(clanMember.id)
+            clanMembers.value = clanMembers.value
+                ?.map { if (it.id == result.id) result else it }
+        } catch (e: Exception) {
+            exception.value = e
         }
 
         clanMembersLoading.value = false

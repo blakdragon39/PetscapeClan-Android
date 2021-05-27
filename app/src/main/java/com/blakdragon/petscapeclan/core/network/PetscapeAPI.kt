@@ -12,28 +12,40 @@ import retrofit2.http.*
 interface PetscapeAPI {
 
     @POST("api/login/register")
-    suspend fun register(@Body request: RegisterRequest) : User
+    suspend fun register(@Body request: RegisterRequest): User
 
     @POST("api/login/google")
-    suspend fun googleLogin(@Body request: GoogleLoginRequest) : User
+    suspend fun googleLogin(@Body request: GoogleLoginRequest): User
 
     @POST("api/login")
-    suspend fun login(@Body request: LoginRequest) : User
+    suspend fun login(@Body request: LoginRequest): User
 
     @GET("api/clanMembers")
     suspend fun getClanMembers(
         @Header("Authorization") token: String? = PetscapePrefs.user?.token
-    ) : List<ClanMember>
+    ): List<ClanMember>
 
     @POST("api/clanMembers")
     suspend fun addClanMember(
         @Body request: ClanMemberRequest,
         @Header("Authorization") token: String? = PetscapePrefs.user?.token
-    ) : ClanMember
+    ): ClanMember
 
     @PUT("api/clanMembers")
     suspend fun updateClanMember(
         @Body request: ClanMemberRequest,
         @Header("Authorization") token: String? = PetscapePrefs.user?.token
-    ) : ClanMember
+    ): ClanMember
+
+    @PUT("api/clanMembers/{id}")
+    suspend fun pingClanMember(
+        @Path("id") memberId: String,
+        @Header("Authorization") token: String? = PetscapePrefs.user?.token
+    ): ClanMember
+
+    @PUT("api/clanMembers/{id}/lastSeen")
+    suspend fun updateLastSeen(
+        @Path("id") memberId: String,
+        @Header("Authorization") token: String? = PetscapePrefs.user?.token
+    ): ClanMember
 }

@@ -17,6 +17,8 @@
     <string name="register_question">Register?</string>
     <string name="register_exclamation">Register!</string>
 
+    <string name="home_update_last_seen">Update last seen on this clan member?</string>
+
     <string name="add_new_clan_member">Add New Clan Member</string>
     <string name="member_runescape_name">Runescape Name</string>
     <string name="member_join_date">Join Date:</string>

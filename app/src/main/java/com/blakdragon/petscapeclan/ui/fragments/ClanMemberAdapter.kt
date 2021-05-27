@@ -9,7 +9,8 @@ import com.blakdragon.petscapeclan.models.ClanMember
 import com.blakdragon.petscapeclan.models.ClanMemberDiffUtil
 
 class ClanMemberAdapter(
-    private val onClanMemberClick: (ClanMember) -> Unit
+    private val onClanMemberClick: (ClanMember) -> Unit,
+    private val onClanMemberLongClick: (ClanMember) -> Unit
 ) : RecyclerView.Adapter<ClanMemberAdapter.ClanMemberViewHolder>() {
 
     private var clanMembers: List<ClanMember> = listOf()
@@ -35,6 +36,10 @@ class ClanMemberAdapter(
             binding.ivRank.setImageResource(clanMember.rank.iconId)
 
             binding.root.setOnClickListener { onClanMemberClick(clanMember) }
+            binding.root.setOnLongClickListener {
+                onClanMemberLongClick(clanMember)
+                true
+            }
         }
     }
 }
