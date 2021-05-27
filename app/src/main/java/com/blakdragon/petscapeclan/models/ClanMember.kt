@@ -12,6 +12,7 @@ class ClanMember(
     val runescapeName: String,
     val rank: Rank,
     val joinDate: LocalDate,
+    var lastSeen: LocalDate?,
     val bossKc: Int,
     val pets: List<Pet>,
     val achievements: List<Achievement>,

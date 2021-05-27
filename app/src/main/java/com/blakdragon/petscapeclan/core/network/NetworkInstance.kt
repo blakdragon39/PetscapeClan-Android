@@ -9,8 +9,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object NetworkInstance {
 
-    private const val BASE_URL = "http://134.122.34.238:8080/" //todo flavours
-
     val API: PetscapeAPI
 
     init {
@@ -21,7 +19,7 @@ object NetworkInstance {
         val okHttpClient = okHttpClientBuilder.build()
 
         API = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.SERVER)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build().create(PetscapeAPI::class.java)

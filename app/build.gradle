@@ -40,6 +40,19 @@ android {
         viewBinding true
         dataBinding true
     }
+
+    flavorDimensions "server"
+
+    productFlavors {
+        local {
+            dimension "server"
+            buildConfigField "String", "SERVER", "\"http://10.0.2.2:8080/\""
+        }
+        live {
+            dimension "server"
+            buildConfigField "String", "SERVER", "\"http://134.122.34.238:8080/\""
+        }
+    }
 }
 
 dependencies {
