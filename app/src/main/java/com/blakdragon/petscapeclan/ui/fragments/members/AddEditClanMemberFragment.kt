@@ -33,6 +33,8 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
     private val viewModel: AddEditClanMemberViewModel by viewModels()
     private val args: AddEditClanMemberFragmentArgs by navArgs()
 
+    private lateinit var altsAdapter: AltsAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit_clan_member, container, false)
         binding.viewModel = viewModel
@@ -46,19 +48,15 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
         binding.bJoinDate.setOnClickListener { pickDate() }
         binding.ivRank.setOnClickListener { pickRank() }
 
+        altsAdapter = AltsAdapter { openNameDialog() }
+        binding.rvAlts.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAlts.adapter = altsAdapter
+
         initModel()
         initPets()
         initAchievements()
 
-        viewModel.addClanMemberResult.observe(viewLifecycleOwner, Observer { result ->
-            if (!result.handled) {
-                if (result.isSuccessful) {
-                    findNavController().navigate(AddEditClanMemberFragmentDirections.toClanMember(result.getUnhandledData()))
-                } else {
-                    parentActivity.handleError(result.getUnhandledException())
-                }
-            }
-        })
+        observeViewModel()
     }
 
     override fun onDestroy() {
@@ -74,7 +72,20 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
             viewModel.rank.value = clanMember.rank
             viewModel.pets.value = clanMember.pets
             viewModel.achievements.value = clanMember.achievements
+            viewModel.alts.value = clanMember.alts
         }
+    }
+
+    private fun observeViewModel() {
+        viewModel.alts.observe(viewLifecycleOwner, Observer { alts -> altsAdapter.setNames(alts) })
+
+        viewModel.addClanMemberResult.observe(viewLifecycleOwner, Observer { result ->
+            if (result.isSuccessful) {
+                findNavController().navigate(AddEditClanMemberFragmentDirections.toClanMember(result.getData()))
+            } else if (!result.exceptionHandled) {
+                parentActivity.handleError(result.getUnhandledException())
+            }
+        })
     }
 
     private fun initPets() {
@@ -121,17 +132,22 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
         if (selected) currentAchievements.add(achievement) else currentAchievements.remove(achievement)
         viewModel.achievements.value = currentAchievements
     }
+
+    private fun openNameDialog() {
+        //todo
+    }
 }
 
 class AddEditClanMemberViewModel : ViewModel() {
 
     val clanMember = MutableLiveData<ClanMember>()
 
-    val runescapeName = MutableLiveData<String>("")
-    val joinDate = MutableLiveData<LocalDate>(LocalDate.now())
-    val rank = MutableLiveData<Rank>(Rank.Bronze)
+    val runescapeName = MutableLiveData("")
+    val joinDate = MutableLiveData(LocalDate.now())
+    val rank = MutableLiveData(Rank.Bronze)
     val pets = MutableLiveData<List<Pet>>()
     val achievements = MutableLiveData<List<Achievement>>()
+    val alts = MutableLiveData<List<String>>()
 
     val joinDateString = MediatorLiveData<String>()
 
@@ -154,6 +170,7 @@ class AddEditClanMemberViewModel : ViewModel() {
                 joinDate = joinDate.value!!,
                 pets = pets.value ?: emptyList(),
                 achievements = achievements.value ?: emptyList(),
+                alts = alts.value ?: emptyList()
             )
 
             val response = if (clanMember.value == null) NetworkInstance.API.addClanMember(request) else NetworkInstance.API.updateClanMember(request)

@@ -51,12 +51,10 @@ class LoginActivity : BaseActivity() {
         viewModel.passwordVisible.observe(this, Observer { visible -> changePasswordInputType(visible) })
 
         viewModel.loginResult.observe(this, Observer { result ->
-            if (!result.handled) {
-                if (result.isSuccessful) {
-                    handleLogin(result.getUnhandledData())
-                } else {
-                    handleError(result.getUnhandledException())
-                }
+            if (result.isSuccessful) {
+                handleLogin(result.getData())
+            } else if (!result.exceptionHandled) {
+                handleError(result.getUnhandledException())
             }
         })
     }

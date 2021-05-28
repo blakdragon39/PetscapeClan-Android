@@ -19,7 +19,7 @@ object NetworkInstance {
         val okHttpClient = okHttpClientBuilder.build()
 
         API = Retrofit.Builder()
-            .baseUrl(BuildConfig.SERVER)
+            .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build().create(PetscapeAPI::class.java)

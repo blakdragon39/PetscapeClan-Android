@@ -17,6 +17,7 @@ class ClanMember(
     val pets: List<Pet>,
     val achievements: List<Achievement>,
     val points: Int,
+    val alts: List<String>
 ) : Parcelable
 
 class ClanMemberRequest(
@@ -25,7 +26,8 @@ class ClanMemberRequest(
     val rank: Rank,
     val joinDate: LocalDate,
     val pets: List<Pet>,
-    val achievements: List<Achievement>
+    val achievements: List<Achievement>,
+    val alts: List<String>
 )
 
 class ClanMemberDiffUtil(
