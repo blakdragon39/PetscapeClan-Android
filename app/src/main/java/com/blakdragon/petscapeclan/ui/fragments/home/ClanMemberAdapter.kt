@@ -33,6 +33,7 @@ class ClanMemberAdapter(
         fun bindView(clanMember: ClanMember) {
             binding.tvName.text = clanMember.runescapeName
             binding.ivRank.setImageResource(clanMember.rank.iconId)
+            binding.tvAlts.text = clanMember.alts.joinToString("\n") { "• $it" }
 
             binding.root.setOnClickListener { onClanMemberClick(clanMember) }
             binding.root.setOnLongClickListener {

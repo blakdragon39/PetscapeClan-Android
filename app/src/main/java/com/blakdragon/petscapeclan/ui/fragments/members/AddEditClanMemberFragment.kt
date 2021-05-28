@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
+import com.blakdragon.petscapeclan.databinding.DialogAddNameBinding
 import com.blakdragon.petscapeclan.databinding.FragmentAddEditClanMemberBinding
 import com.blakdragon.petscapeclan.models.*
 import com.blakdragon.petscapeclan.models.enums.AchievementType
@@ -134,7 +136,14 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
     }
 
     private fun openNameDialog() {
-        //todo
+        val view: DialogAddNameBinding = DataBindingUtil.inflate(LayoutInflater.from(requireContext()), R.layout.dialog_add_name, null, false)
+        view.viewModel = viewModel
+
+        AlertDialog.Builder(requireContext())
+            .setView(view.root)
+            .setPositiveButton(android.R.string.ok) { _, _ -> viewModel.addAlt() }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 }
 
@@ -149,6 +158,7 @@ class AddEditClanMemberViewModel : ViewModel() {
     val achievements = MutableLiveData<List<Achievement>>()
     val alts = MutableLiveData<List<String>>()
 
+    val newAltName = MutableLiveData("")
     val joinDateString = MediatorLiveData<String>()
 
     val addClanMemberLoading = MutableLiveData(false)
@@ -181,5 +191,14 @@ class AddEditClanMemberViewModel : ViewModel() {
         }
 
         addClanMemberLoading.value = false
+    }
+
+    fun addAlt() {
+        alts.value = mutableListOf<String>().apply {
+            alts.value?.let { addAll(it) }
+            newAltName.value?.let { add(it) }
+        }
+
+        newAltName.value = ""
     }
 }
