@@ -63,6 +63,7 @@ class ClanMemberViewModel : ViewModel() {
 
     val bossKc = MediatorLiveData<Int>()
     val points = MediatorLiveData<Int>()
+    val alts = MediatorLiveData<String>()
 
     val pets = MediatorLiveData<Int>()
     val totalPets: LiveData<Int> = MutableLiveData(PetType.values().size)
@@ -73,6 +74,7 @@ class ClanMemberViewModel : ViewModel() {
     init {
         bossKc.addSource(clanMember) { bossKc.value = clanMember.value?.bossKc }
         points.addSource(clanMember) { points.value = clanMember.value?.points }
+        alts.addSource(clanMember) { alts.value = clanMember.value?.alts?.joinToString("") { "• $it" } }
         pets.addSource(clanMember) { pets.value = clanMember.value?.pets?.size }
         achievements.addSource(clanMember) { achievements.value = clanMember.value?.achievements?.size }
     }
