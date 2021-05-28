@@ -90,6 +90,7 @@ class HomeViewModel : ViewModel() {
     val filteredClanMembers = MediatorLiveData<List<ClanMember>>()
 
     val filterNotSeenToday = MutableLiveData(false)
+    val filterName = MutableLiveData("")
 
     val clanMembersLoading = MutableLiveData(false)
 
@@ -98,6 +99,7 @@ class HomeViewModel : ViewModel() {
     init {
         filteredClanMembers.addSource(clanMembers) { filteredClanMembers.value = sortAndFilterClanMembers() }
         filteredClanMembers.addSource(filterNotSeenToday) { filteredClanMembers.value = sortAndFilterClanMembers() }
+        filteredClanMembers.addSource(filterName) { filteredClanMembers.value = sortAndFilterClanMembers() }
     }
 
     fun getClanMembers() = viewModelScope.launch {
@@ -127,7 +129,10 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun sortAndFilterClanMembers(): List<ClanMember>? {
+        val nameFilter = filterName.value ?: ""
+
         var returnMembers = clanMembers.value
+            ?.filter { it.runescapeName.contains(nameFilter) || it.alts.any { altName -> altName.contains(nameFilter) } }
             ?.sortedBy { it.runescapeName.lowercase() }
             ?.sortedBy { it.rank.ordinal }
 

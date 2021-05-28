@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.alts}"
                 tools:text="- Queen Blak\n- Petscape"/>
-            
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
