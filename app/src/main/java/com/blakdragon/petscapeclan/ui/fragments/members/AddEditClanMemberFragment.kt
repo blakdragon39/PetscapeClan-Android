@@ -50,7 +50,10 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
         binding.bJoinDate.setOnClickListener { pickDate() }
         binding.ivRank.setOnClickListener { pickRank() }
 
-        altsAdapter = AltsAdapter { openNameDialog() }
+        altsAdapter = AltsAdapter(
+            onAddNameClick = { openNameDialog() },
+            onRemoveNameClick = { name -> removeAlt(name) }
+        )
         binding.rvAlts.layoutManager = LinearLayoutManager(requireContext())
         binding.rvAlts.adapter = altsAdapter
 
@@ -144,6 +147,10 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
             .setPositiveButton(android.R.string.ok) { _, _ -> viewModel.addAlt() }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+    }
+
+    private fun removeAlt(name: String) {
+        viewModel.alts.value = viewModel.alts.value?.filter { it != name }
     }
 }
 

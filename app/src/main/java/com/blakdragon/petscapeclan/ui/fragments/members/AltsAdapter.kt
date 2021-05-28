@@ -9,7 +9,8 @@ import com.blakdragon.petscapeclan.databinding.CellAltNameBinding
 import java.lang.IllegalStateException
 
 class AltsAdapter(
-    private val onAddNameClick: () -> Unit
+    private val onAddNameClick: () -> Unit,
+    private val onRemoveNameClick: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -59,7 +60,7 @@ class AltsAdapter(
 
         fun bindView(item: NameItem) {
             binding.tvName.text = item.name
-            //todo delete a name
+            binding.ivDelete.setOnClickListener { onRemoveNameClick(item.name) }
         }
     }
 

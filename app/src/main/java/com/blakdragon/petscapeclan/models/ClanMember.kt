@@ -46,7 +46,8 @@ class ClanMemberDiffUtil(
                 oldMember.bossKc == newMember.bossKc &&
                 oldMember.pets == newMember.pets &&
                 oldMember.achievements == newMember.achievements &&
-                oldMember.points == newMember.points
+                oldMember.points == newMember.points &&
+                oldMember.alts == newMember.alts
 
     }
 
