@@ -163,7 +163,7 @@ class AddEditClanMemberViewModel : ViewModel() {
     val rank = MutableLiveData(Rank.Bronze)
     val pets = MutableLiveData<List<Pet>>()
     val achievements = MutableLiveData<List<Achievement>>()
-    val alts = MutableLiveData<List<String>>()
+    val alts = MutableLiveData<List<String>>(listOf())
 
     val newAltName = MutableLiveData("")
     val joinDateString = MediatorLiveData<String>()

@@ -18,6 +18,7 @@ import com.blakdragon.petscapeclan.databinding.FragmentClanMemberBinding
 import com.blakdragon.petscapeclan.models.ClanMember
 import com.blakdragon.petscapeclan.models.enums.AchievementType
 import com.blakdragon.petscapeclan.models.enums.PetType
+import com.blakdragon.petscapeclan.models.enums.Rank
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.ui.fragments.TextAdapter
@@ -64,6 +65,7 @@ class ClanMemberViewModel : ViewModel() {
     val bossKc = MediatorLiveData<Int>()
     val points = MediatorLiveData<Int>()
     val alts = MediatorLiveData<String>()
+    val possibleRankId = MediatorLiveData<Int>()
 
     val pets = MediatorLiveData<Int>()
     val totalPets: LiveData<Int> = MutableLiveData(PetType.values().size)
@@ -77,6 +79,6 @@ class ClanMemberViewModel : ViewModel() {
         alts.addSource(clanMember) { alts.value = clanMember.value?.alts?.joinToString("") { "• $it" } }
         pets.addSource(clanMember) { pets.value = clanMember.value?.pets?.size }
         achievements.addSource(clanMember) { achievements.value = clanMember.value?.achievements?.size }
+        possibleRankId.addSource(clanMember) { possibleRankId.value = it.determinePossibleRank()?.textId ?: R.string.undetermined }
     }
-
 }

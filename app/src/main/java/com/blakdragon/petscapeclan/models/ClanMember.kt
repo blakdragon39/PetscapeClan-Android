@@ -18,7 +18,10 @@ class ClanMember(
     val achievements: List<Achievement>,
     val points: Int,
     val alts: List<String>
-) : Parcelable
+) : Parcelable {
+
+    fun determinePossibleRank(): Rank? = Rank.values().firstOrNull { it.points <= points }
+}
 
 class ClanMemberRequest(
     val id: String? = null,
