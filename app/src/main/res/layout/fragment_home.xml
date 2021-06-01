@@ -34,7 +34,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@={viewModel.filterName}"
+                android:layout_marginEnd="4dp"
                 tools:text="Blak"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSort"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_sort"
+                android:tint="@color/onPrimary"
+                android:layout_marginEnd="4dp"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivFilters"

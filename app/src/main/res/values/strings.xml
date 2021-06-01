@@ -21,6 +21,8 @@
     <string name="home_update_last_seen">Update last seen on this clan member?</string>
     <string name="home_filter_not_seen">Not seen today</string>
     <string name="home_filter_rank_up">Needs rank up</string>
+    <string name="home_sort_default">Default</string>
+    <string name="home_sort_alphabetical">Alphabetical</string>
 
     <string name="add_new_clan_member">Add New Clan Member</string>
     <string name="member_runescape_name">Runescape Name</string>

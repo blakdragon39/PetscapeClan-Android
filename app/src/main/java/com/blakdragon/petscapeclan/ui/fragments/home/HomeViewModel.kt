@@ -17,6 +17,7 @@ class HomeViewModel : ViewModel() {
     val filterNotSeenToday = MutableLiveData(false)
     val filterNeedsRankUp = MutableLiveData(false)
     val filterName = MutableLiveData("")
+    val sortMethod = MutableLiveData<HomeSortMethod>(HomeSortMethod.DEFAULT)
 
     val clanMembersLoading = MutableLiveData(false)
 
@@ -27,7 +28,8 @@ class HomeViewModel : ViewModel() {
             clanMembers,
             filterNotSeenToday,
             filterNeedsRankUp,
-            filterName)
+            filterName,
+            sortMethod)
             .forEach { source ->
                 filteredClanMembers.addSource(source) { filteredClanMembers.value = sortAndFilterClanMembers() }
             }
@@ -75,9 +77,17 @@ class HomeViewModel : ViewModel() {
 
         returnMembers = returnMembers
             ?.filter { it.runescapeName.lowercase().contains(nameFilter) || it.alts.any { altName -> altName.lowercase().contains(nameFilter) } }
-            ?.sortedBy { it.runescapeName.lowercase() }
-            ?.sortedBy { it.rank.ordinal }
+
+        returnMembers = when (sortMethod.value) {
+            HomeSortMethod.DEFAULT -> returnMembers
+                ?.sortedBy { it.runescapeName.lowercase() }
+                ?.sortedBy { it.rank.ordinal }
+            HomeSortMethod.ALPHABETICAL -> returnMembers?.sortedBy { it.runescapeName }
+            else -> returnMembers
+        }
 
         return returnMembers
     }
 }
+
+enum class HomeSortMethod { DEFAULT, ALPHABETICAL }

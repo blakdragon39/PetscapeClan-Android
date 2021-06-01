@@ -46,6 +46,7 @@ class HomeFragment : BaseFragment<MainActivity>() {
 
         binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
         binding.ivFilters.setOnClickListener { FilterPopup().show(it, viewModel) }
+        binding.ivSort.setOnClickListener { SortPopUp().show(it, viewModel) }
 
         adapter = ClanMemberAdapter(this::onClanMemberClick, this::onClanMemberLongClick)
         binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
