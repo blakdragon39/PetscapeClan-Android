@@ -129,10 +129,10 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun sortAndFilterClanMembers(): List<ClanMember>? {
-        val nameFilter = filterName.value ?: ""
+        val nameFilter = filterName.value?.lowercase() ?: ""
 
         var returnMembers = clanMembers.value
-            ?.filter { it.runescapeName.contains(nameFilter) || it.alts.any { altName -> altName.contains(nameFilter) } }
+            ?.filter { it.runescapeName.lowercase().contains(nameFilter) || it.alts.any { altName -> altName.lowercase().contains(nameFilter) } }
             ?.sortedBy { it.runescapeName.lowercase() }
             ?.sortedBy { it.rank.ordinal }
 

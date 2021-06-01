@@ -114,7 +114,7 @@
     <string name="achievement_transmog_metamorphic_dust">Metamorphic Dust Olmlet Transmog</string>
     <string name="achievement_transmog_6Jads">TzHaar-Ket-Rak\'s Challenges Jad Transmog</string>
     <string name="achievement_transmog_blue_heron">Blue Heron Transmog</string>
-    <string name="achievement_transmog_sraracha">Srarach Transmogs</string>
+    <string name="achievement_transmog_sraracha">Sraracha Transmogs</string>
 
     <string name="achievement_clues_600_beginner">600 Beginner Clues</string>
     <string name="achievement_clues_500_easy">500 Easy Clues</string>
@@ -129,6 +129,6 @@
 
     <string name="achievement_collection_log_250">250 Collection Log Slots</string>
     <string name="achievement_collection_log_500">500 Collection Log Slots</string>
-    <string name="achievement_collection_log_1000">1000  Collection Log Slots</string>
+    <string name="achievement_collection_log_1000">1000 Collection Log Slots</string>
 
 </resources>

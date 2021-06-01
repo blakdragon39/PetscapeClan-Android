@@ -50,7 +50,7 @@ android {
         }
         live {
             dimension "server"
-            buildConfigField "String", "API_URL", "\"http://134.122.34.238:8080/\""
+            buildConfigField "String", "API_URL", "\"https://petscape.cc/\""
         }
     }
 }

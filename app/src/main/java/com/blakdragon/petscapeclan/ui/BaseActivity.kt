@@ -12,13 +12,14 @@ abstract class BaseActivity : AppCompatActivity() {
     fun handleError(e: Exception) {
         Timber.e(e)
 
-        val defaultMessage = getString(R.string.network_error)
-
-        val message = when (e) {
+        var message = when (e) {
             is HttpException -> e.response()?.errorBody()?.toNetworkError()?.message
-            else -> defaultMessage
+            else -> null
         }
-        showMessage(message ?: defaultMessage)
+
+        if (message.isNullOrEmpty()) message = getString(R.string.network_error)
+
+        showMessage(message)
     }
 
     fun showMessage(message: String) {
