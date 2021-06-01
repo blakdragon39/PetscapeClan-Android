@@ -21,9 +21,7 @@ interface PetscapeAPI {
     suspend fun login(@Body request: LoginRequest): User
 
     @GET("api/clanMembers")
-    suspend fun getClanMembers(
-        @Header("Authorization") token: String? = PetscapePrefs.user?.token
-    ): List<ClanMember>
+    suspend fun getClanMembers(): List<ClanMember>
 
     @POST("api/clanMembers")
     suspend fun addClanMember(
