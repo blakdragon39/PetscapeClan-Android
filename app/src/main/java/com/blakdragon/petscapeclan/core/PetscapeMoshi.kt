@@ -1,8 +1,11 @@
 package com.blakdragon.petscapeclan.core
 
+import com.blakdragon.petscapeclan.models.enums.AchievementType
+import com.blakdragon.petscapeclan.models.enums.PetType
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
+import com.squareup.moshi.adapters.EnumJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -12,6 +15,8 @@ val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .add(LocalDateAdapter())
     .add(LocalDateTimeAdapter())
+    .add(PetType::class.java, EnumJsonAdapter.create(PetType::class.java).withUnknownFallback(PetType.Unknown))
+    .add(AchievementType::class.java, EnumJsonAdapter.create(AchievementType::class.java).withUnknownFallback(AchievementType.Unknown))
     .build()
 
 class LocalDateAdapter {

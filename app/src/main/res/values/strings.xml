@@ -98,6 +98,8 @@
     <string name="pet_youngleff">Youngllef</string>
     <string name="pet_smolcano">Smolcano</string>
 
+    <string name="pet_unknown">Unknown Pet</string>
+
     <string name="achievement_total_1500">1500 Total Level</string>
     <string name="achievement_total_2000">2000 Total Level</string>
     <string name="achievement_max_cape">Max Cape</string>
@@ -116,6 +118,7 @@
 
     <string name="achievement_transmog_dark_acorn">Dark Acorn Squirrel Transmog</string>
     <string name="achievement_transmog_metamorphic_dust">Metamorphic Dust Olmlet Transmog</string>
+    <string name="achievement_transmog_sanguine_dust">Sanguine Dust Verzik Transmog</string>
     <string name="achievement_transmog_6Jads">TzHaar-Ket-Rak\'s Challenges Jad Transmog</string>
     <string name="achievement_transmog_blue_heron">Blue Heron Transmog</string>
     <string name="achievement_transmog_sraracha">Sraracha Transmogs</string>
@@ -134,5 +137,7 @@
     <string name="achievement_collection_log_250">250 Collection Log Slots</string>
     <string name="achievement_collection_log_500">500 Collection Log Slots</string>
     <string name="achievement_collection_log_1000">1000 Collection Log Slots</string>
+
+    <string name="achievement_unknown">Unknown Achievement</string>
 
 </resources>

@@ -53,5 +53,7 @@ enum class PetType(@StringRes val displayNameId: Int) {
     Phoenix(R.string.pet_phoenix),
     TinyTempor(R.string.pet_tiny_tempor),
     Youngllef(R.string.pet_youngleff),
-    Smolcano(R.string.pet_smolcano)
+    Smolcano(R.string.pet_smolcano),
+
+    Unknown(R.string.pet_unknown)
 }

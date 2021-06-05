@@ -23,6 +23,7 @@ enum class AchievementType(@StringRes val labelId: Int) {
 
     TransmogDarkAcorn(R.string.achievement_transmog_dark_acorn),
     TransmogMetamorphicDust(R.string.achievement_transmog_metamorphic_dust),
+    TransmogSanguineDust(R.string.achievement_transmog_sanguine_dust),
     Transmog6Jads(R.string.achievement_transmog_6Jads),
     TransmogBlueHeron(R.string.achievement_transmog_blue_heron),
     TransmogSraracha(R.string.achievement_transmog_sraracha),
@@ -42,5 +43,5 @@ enum class AchievementType(@StringRes val labelId: Int) {
     CollectionLog500(R.string.achievement_collection_log_500),
     CollectionLog1000(R.string.achievement_collection_log_1000),
 
-
+    Unknown(R.string.achievement_unknown)
 }
