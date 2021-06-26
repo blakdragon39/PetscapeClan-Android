@@ -21,6 +21,8 @@ class ClanMember(
 ) : Parcelable {
 
     fun determinePossibleRank(): Rank? = Rank.values().firstOrNull { it.points <= points }
+
+    fun altsText() = alts.joinToString("\n") { "• $it" }
 }
 
 class ClanMemberRequest(

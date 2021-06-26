@@ -95,6 +95,7 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
 
     private fun initPets() {
         val selectables = PetType.values()
+            .filter { it != PetType.Unknown }
             .map { Pet(it) }
             .map { pet -> SelectableObject(pet, getString(pet.type.displayNameId), isSelected = args.clanMember?.pets?.contains(pet) == true) }
 
@@ -104,6 +105,7 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
 
     private fun initAchievements() {
         val selectables = AchievementType.values()
+            .filter { it != AchievementType.Unknown }
             .map { Achievement(it) }
             .map { achievement -> SelectableObject(achievement, getString(achievement.type.labelId), isSelected = args.clanMember?.achievements?.contains(achievement) == true) }
         binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())

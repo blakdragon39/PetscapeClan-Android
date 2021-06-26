@@ -1,43 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="?android:attr/selectableItemBackground"
-    android:gravity="center_vertical"
-    tools:background="@color/onPrimary">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvName"
-        android:layout_width="0dp"
+    <data>
+        <variable
+            name="clanMember"
+            type="com.blakdragon.petscapeclan.models.ClanMember" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/primary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivRank"
-        tools:text="Blakdragon"/>
+        android:padding="16dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        tools:background="@color/onPrimary">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivRank"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@drawable/rank_dragon"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:text="@{clanMember.runescapeName}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivRank"
+            tools:text="Blakdragon"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAlts"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivRank"
-        tools:text="Queen Blak, Iron Blak,"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRank"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@{clanMember.rank.iconId}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@drawable/rank_dragon"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAlts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="16dp"
+            android:text="@{clanMember.altsText()}"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivRank"
+            tools:text="Queen Blak, Iron Blak,"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

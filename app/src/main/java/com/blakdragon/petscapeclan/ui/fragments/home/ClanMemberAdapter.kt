@@ -31,9 +31,7 @@ class ClanMemberAdapter(
     inner class ClanMemberViewHolder(private val binding: CellClanMemberBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(clanMember: ClanMember) {
-            binding.tvName.text = clanMember.runescapeName
-            binding.ivRank.setImageResource(clanMember.rank.iconId)
-            binding.tvAlts.text = clanMember.alts.joinToString("\n") { "• $it" }
+            binding.clanMember = clanMember
 
             binding.root.setOnClickListener { onClanMemberClick(clanMember) }
             binding.root.setOnLongClickListener {
