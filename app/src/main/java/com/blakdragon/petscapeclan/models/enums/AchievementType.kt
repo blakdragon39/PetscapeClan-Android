@@ -27,6 +27,7 @@ enum class AchievementType(@StringRes val labelId: Int) {
     Transmog6Jads(R.string.achievement_transmog_6Jads),
     TransmogBlueHeron(R.string.achievement_transmog_blue_heron),
     TransmogSraracha(R.string.achievement_transmog_sraracha),
+    TransmogParasiticEgg(R.string.achievement_transmog_phosanis),
 
     Clues600Beginner(R.string.achievement_clues_600_beginner),
     Clues500Easy(R.string.achievement_clues_500_easy),
