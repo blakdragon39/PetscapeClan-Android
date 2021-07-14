@@ -1,109 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    app:cardCornerRadius="16dp">
 
-    <data>
-        <import type="com.blakdragon.petscapeclan.models.enums.Rank"/>
-    </data>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRanks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:cardCornerRadius="16dp">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankBronze"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Bronze}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankIron"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Iron}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankSteel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Steel}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankGold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Gold}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankMithril"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Mithril}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankAdamant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Adamant}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankRune"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Rune}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankDragon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Dragon}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Admin}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankDeputyOwner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.DeputyOwner}"
-                    app:textColor="@color/primary"/>
-
-                <com.blakdragon.petscapeclan.ui.views.RankView
-                    android:id="@+id/rankOwner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rank="@{Rank.Owner}"
-                    app:textColor="@color/primary"/>
-
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </ScrollView>
-
-    </androidx.cardview.widget.CardView>
-
-</layout>
+</androidx.cardview.widget.CardView>

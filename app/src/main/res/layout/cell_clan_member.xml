@@ -33,7 +33,7 @@
             android:id="@+id/ivRank"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@{clanMember.rank.iconId}"
+            android:src="@{clanMember.rank.type.iconId}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:src="@drawable/rank_dragon"/>

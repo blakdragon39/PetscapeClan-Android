@@ -1,12 +1,10 @@
 package com.blakdragon.petscapeclan.core.network
 
 import com.blakdragon.petscapeclan.core.PetscapePrefs
-import com.blakdragon.petscapeclan.models.User
 import com.blakdragon.petscapeclan.core.network.requests.GoogleLoginRequest
 import com.blakdragon.petscapeclan.core.network.requests.LoginRequest
 import com.blakdragon.petscapeclan.core.network.requests.RegisterRequest
-import com.blakdragon.petscapeclan.models.ClanMemberRequest
-import com.blakdragon.petscapeclan.models.ClanMember
+import com.blakdragon.petscapeclan.models.*
 import retrofit2.http.*
 
 interface PetscapeAPI {
@@ -46,4 +44,13 @@ interface PetscapeAPI {
         @Path("id") memberId: String,
         @Header("Authorization") token: String? = PetscapePrefs.user?.token
     ): ClanMember
+
+    @GET("api/data/achievements")
+    suspend fun getAchievements(): List<AchievementData>
+
+    @GET("api/data/pets")
+    suspend fun getPets(): List<PetData>
+
+    @GET("api/data/ranks")
+    suspend fun getRanks(): List<Rank>
 }

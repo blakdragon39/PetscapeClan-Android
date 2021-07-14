@@ -13,13 +13,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
+import com.blakdragon.petscapeclan.core.DataRepo
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
+import com.blakdragon.petscapeclan.core.network.models.AchievementRequest
+import com.blakdragon.petscapeclan.core.network.models.PetRequest
 import com.blakdragon.petscapeclan.databinding.DialogAddNameBinding
 import com.blakdragon.petscapeclan.databinding.FragmentAddEditClanMemberBinding
 import com.blakdragon.petscapeclan.models.*
-import com.blakdragon.petscapeclan.models.enums.AchievementType
-import com.blakdragon.petscapeclan.models.enums.PetType
-import com.blakdragon.petscapeclan.models.enums.Rank
+import com.blakdragon.petscapeclan.models.enums.RankType
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
 import com.blakdragon.petscapeclan.utils.toString
@@ -74,9 +75,9 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
             viewModel.clanMember.value = clanMember
             viewModel.runescapeName.value = clanMember.runescapeName
             viewModel.joinDate.value = clanMember.joinDate
-            viewModel.rank.value = clanMember.rank
-            viewModel.pets.value = clanMember.pets
-            viewModel.achievements.value = clanMember.achievements
+            viewModel.rank.value = clanMember.rank.type
+            viewModel.pets.value = clanMember.pets.map { it.toRequest() }
+            viewModel.achievements.value = clanMember.achievements.map { it.toRequest() }
             viewModel.alts.value = clanMember.alts
         }
     }
@@ -93,23 +94,20 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
         })
     }
 
-    private fun initPets() {
-        val selectables = PetType.values()
-            .filter { it != PetType.Unknown }
-            .map { Pet(it) }
-            .map { pet -> SelectableObject(pet, getString(pet.type.displayNameId), isSelected = args.clanMember?.pets?.contains(pet) == true) }
+    private fun initPets() = lifecycleScope.launch {
+        val selectables = DataRepo.getPets()
+            .map { data -> SelectableObject(data, data.label, isSelected = args.clanMember?.hasPet(data) == true) }
 
         binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPets.adapter = SelectableAdapter(selectables, this::onPetSelected)
+        binding.rvPets.adapter = SelectableAdapter(selectables) { data, selected -> onPetSelected(data, selected) }
     }
 
-    private fun initAchievements() {
-        val selectables = AchievementType.values()
-            .filter { it != AchievementType.Unknown }
-            .map { Achievement(it) }
-            .map { achievement -> SelectableObject(achievement, getString(achievement.type.labelId), isSelected = args.clanMember?.achievements?.contains(achievement) == true) }
+    private fun initAchievements() = lifecycleScope.launch {
+        val selectables = DataRepo.getAchievements()
+            .map { data -> SelectableObject(data, data.label, isSelected = args.clanMember?.hasAchievement(data) == true) }
+
         binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvAchievements.adapter = SelectableAdapter(selectables, this::onAchievementSelected)
+        binding.rvAchievements.adapter = SelectableAdapter(selectables) { data, selected -> onAchievementSelected(data, selected) }
     }
 
     private fun pickDate() {
@@ -120,23 +118,25 @@ class AddEditClanMemberFragment: BaseFragment<MainActivity>() {
         }, currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth).show()
     }
 
-    private fun pickRank() {
+    private fun pickRank() = lifecycleScope.launch {
         val popup = RankPopup()
-        popup.show(binding.ivRank) { rank ->
+        popup.show(binding.ivRank, DataRepo.getRanks()) { rank ->
             viewModel.rank.value = rank
             popup.dismiss()
         }
     }
 
-    private fun onPetSelected(pet: Pet, selected: Boolean) {
+    private fun onPetSelected(petData: PetData, selected: Boolean) {
+        val petRequest = PetRequest(petData.type)
         val currentPets = viewModel.pets.value?.toMutableList() ?: mutableListOf()
-        if (selected) currentPets.add(pet) else currentPets.remove(pet)
+        if (selected) currentPets.add(petRequest) else currentPets.remove(petRequest)
         viewModel.pets.value = currentPets
     }
 
-    private fun onAchievementSelected(achievement: Achievement, selected: Boolean) {
+    private fun onAchievementSelected(achievementData: AchievementData, selected: Boolean) {
+        val achievementRequest = AchievementRequest(achievementData.type)
         val currentAchievements = viewModel.achievements.value?.toMutableList() ?: mutableListOf()
-        if (selected) currentAchievements.add(achievement) else currentAchievements.remove(achievement)
+        if (selected) currentAchievements.add(achievementRequest) else currentAchievements.remove(achievementRequest)
         viewModel.achievements.value = currentAchievements
     }
 
@@ -162,9 +162,9 @@ class AddEditClanMemberViewModel : ViewModel() {
 
     val runescapeName = MutableLiveData("")
     val joinDate = MutableLiveData(LocalDate.now())
-    val rank = MutableLiveData(Rank.Bronze)
-    val pets = MutableLiveData<List<Pet>>()
-    val achievements = MutableLiveData<List<Achievement>>()
+    val rank = MutableLiveData(RankType.Bronze)
+    val pets = MutableLiveData<List<PetRequest>>()
+    val achievements = MutableLiveData<List<AchievementRequest>>()
     val alts = MutableLiveData<List<String>>(listOf())
 
     val newAltName = MutableLiveData("")

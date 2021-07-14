@@ -2,7 +2,9 @@ package com.blakdragon.petscapeclan.models
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
-import com.blakdragon.petscapeclan.models.enums.Rank
+import com.blakdragon.petscapeclan.core.network.models.AchievementRequest
+import com.blakdragon.petscapeclan.core.network.models.PetRequest
+import com.blakdragon.petscapeclan.models.enums.RankType
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
@@ -20,18 +22,20 @@ class ClanMember(
     val alts: List<String>
 ) : Parcelable {
 
-    fun determinePossibleRank(): Rank? = Rank.values().firstOrNull { it.points <= points }
-
     fun altsText() = alts.joinToString("\n") { "• $it" }
+
+    fun hasPet(petData: PetData): Boolean = pets.any { it.type == petData.type }
+
+    fun hasAchievement(achievementData: AchievementData): Boolean = achievements.any { it.type == achievementData.type }
 }
 
 class ClanMemberRequest(
     val id: String? = null,
     val runescapeName: String,
-    val rank: Rank,
+    val rank: RankType,
     val joinDate: LocalDate,
-    val pets: List<Pet>,
-    val achievements: List<Achievement>,
+    val pets: List<PetRequest>,
+    val achievements: List<AchievementRequest>,
     val alts: List<String>
 )
 
