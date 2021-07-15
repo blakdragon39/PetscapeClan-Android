@@ -77,6 +77,6 @@ class ClanMemberViewModel : ViewModel() {
         alts.addSource(clanMember) { alts.value = clanMember.value?.alts?.joinToString("") { "• $it" } }
         pets.addSource(clanMember) { pets.value = clanMember.value?.pets?.size }
         achievements.addSource(clanMember) { achievements.value = clanMember.value?.achievements?.size }
-        possibleRank.addSource(clanMember) { possibleRank.value = DataRepo.determinePossibleRank(it)?.label }
+        possibleRank.addSource(clanMember) { possibleRank.value = clanMember.value?.possibleRank?.label }
     }
 }

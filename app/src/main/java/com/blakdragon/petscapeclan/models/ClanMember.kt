@@ -19,7 +19,8 @@ class ClanMember(
     val pets: List<Pet>,
     val achievements: List<Achievement>,
     val points: Int,
-    val alts: List<String>
+    val alts: List<String>,
+    val possibleRank: Rank
 ) : Parcelable {
 
     fun altsText() = alts.joinToString("\n") { "• $it" }

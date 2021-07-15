@@ -4,7 +4,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blakdragon.petscapeclan.core.DataRepo
 import com.blakdragon.petscapeclan.core.network.NetworkInstance
 import com.blakdragon.petscapeclan.models.ClanMember
 import kotlinx.coroutines.launch
@@ -73,7 +72,7 @@ class HomeViewModel : ViewModel() {
         }
 
         if (filterNeedsRankUp.value == true) {
-            returnMembers = returnMembers?.filter { (DataRepo.determinePossibleRank(it)?.order ?: Int.MAX_VALUE) < it.rank.order }
+            returnMembers = returnMembers?.filter { it.possibleRank.order > it.rank.order }
         }
 
         returnMembers = returnMembers

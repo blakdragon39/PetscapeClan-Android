@@ -36,10 +36,4 @@ object DataRepo {
 
         return ranks!!
     }
-
-    fun determinePossibleRank(clanMember: ClanMember): Rank? {
-        return ranks
-            ?.filter { it.type == RankType.Admin || it.type == RankType.DeputyOwner || it.type == RankType.Owner }
-            ?.firstOrNull { it.points <= clanMember.points } //todo this won't work if ranks not loaded yet
-    }
 }
