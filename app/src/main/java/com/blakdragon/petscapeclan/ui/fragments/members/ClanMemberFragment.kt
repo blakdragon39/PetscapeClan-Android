@@ -66,10 +66,10 @@ class ClanMemberViewModel : ViewModel() {
     val possibleRank = MediatorLiveData<String>()
 
     val pets = MediatorLiveData<Int>()
-    val totalPets: LiveData<Int> = MutableLiveData(PetType.values().size)
+    val totalPets: LiveData<Int> = MutableLiveData(PetType.validPets().size)
 
     val achievements = MediatorLiveData<Int>()
-    val totalAchievements: LiveData<Int> = MutableLiveData(AchievementType.values().size)
+    val totalAchievements: LiveData<Int> = MutableLiveData(AchievementType.validAchievements().size)
 
     init {
         bossKc.addSource(clanMember) { bossKc.value = clanMember.value?.bossKc }

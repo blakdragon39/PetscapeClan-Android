@@ -41,5 +41,9 @@ enum class AchievementType {
     CollectionLog500,
     CollectionLog1000,
 
-    Unknown
+    Unknown;
+
+    companion object {
+        fun validAchievements(): List<AchievementType> = values().toMutableList().apply { remove(Unknown) }
+    }
 }
