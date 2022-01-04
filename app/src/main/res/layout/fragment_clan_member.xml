@@ -169,21 +169,11 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.cardview.widget.CardView
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/cvPets"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="12dp"
-                app:cardBackgroundColor="@color/onPrimary"
-                app:cardCornerRadius="16dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvPets"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp"
-                    tools:listitem="@layout/cell_selectable_text"/>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -220,21 +210,11 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.cardview.widget.CardView
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/cvAchievements"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="12dp"
-                app:cardBackgroundColor="@color/onPrimary"
-                app:cardCornerRadius="16dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvAchievements"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp"
-                    tools:listitem="@layout/cell_selectable_text" />
-
-            </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

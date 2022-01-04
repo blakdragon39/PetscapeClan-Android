@@ -18,6 +18,7 @@ import com.blakdragon.petscapeclan.models.enums.AchievementType
 import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
+import com.blakdragon.petscapeclan.ui.components.CardedList
 import com.blakdragon.petscapeclan.ui.fragments.TextAdapter
 import kotlinx.coroutines.launch
 
@@ -41,13 +42,10 @@ class ClanMemberFragment : BaseFragment<MainActivity>() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.clanMember.value = args.clanMember
 
-        binding.rvPets.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPets.adapter = TextAdapter(args.clanMember.pets.map { it.label })
-
-        binding.rvAchievements.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvAchievements.adapter = TextAdapter(args.clanMember.achievements.map { it.label })
-
         binding.ivEdit.setOnClickListener { findNavController().navigate(ClanMemberFragmentDirections.toEditClanMember(args.clanMember)) }
+
+        binding.cvPets.setContent { CardedList(args.clanMember.pets.map { it.label }) }
+        binding.cvAchievements.setContent { CardedList(args.clanMember.achievements.map { it.label }) }
     }
 
     override fun onDestroy() {
