@@ -31,8 +31,8 @@
     <string name="member_alts">Alts</string>
     <string name="member_pets">Pets</string>
     <string name="member_achievements">Achievements</string>
-    <string name="member_boss_kc">Boss KC:</string>
-    <string name="member_points">Points:</string>
-    <string name="member_possible_rank">Possible Rank:</string>
+    <string name="member_boss_kc">Boss KC</string>
+    <string name="member_points">Points</string>
+    <string name="member_possible_rank">Possible Rank</string>
 
 </resources>
