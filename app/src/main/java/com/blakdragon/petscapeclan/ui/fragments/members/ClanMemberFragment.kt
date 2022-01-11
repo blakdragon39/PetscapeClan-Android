@@ -9,18 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.blakdragon.petscapeclan.R
-import com.blakdragon.petscapeclan.core.DataRepo
 import com.blakdragon.petscapeclan.databinding.FragmentClanMemberBinding
 import com.blakdragon.petscapeclan.models.ClanMember
-import com.blakdragon.petscapeclan.models.enums.AchievementType
-import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
-import com.blakdragon.petscapeclan.ui.components.CardedList
-import com.blakdragon.petscapeclan.ui.fragments.TextAdapter
-import kotlinx.coroutines.launch
+import com.blakdragon.petscapeclan.ui.theme.PetscapeTheme
 
 class ClanMemberFragment : BaseFragment<MainActivity>() {
 
@@ -44,8 +38,13 @@ class ClanMemberFragment : BaseFragment<MainActivity>() {
 
         binding.ivEdit.setOnClickListener { findNavController().navigate(ClanMemberFragmentDirections.toEditClanMember(args.clanMember)) }
 
-        binding.cvPets.setContent { CardedList(args.clanMember.pets.map { it.label }) }
-        binding.cvAchievements.setContent { CardedList(args.clanMember.achievements.map { it.label }) }
+        binding.cvClanMember.setContent {
+            PetscapeTheme {
+                ClanMemberScreen(args.clanMember)
+            }
+        }
+//        binding.cvPets.setContent { CardedList(args.clanMember.pets.map { it.label }) }
+//        binding.cvAchievements.setContent { CardedList(args.clanMember.achievements.map { it.label }) }
     }
 
     override fun onDestroy() {
@@ -63,18 +62,10 @@ class ClanMemberViewModel : ViewModel() {
     val alts = MediatorLiveData<String>()
     val possibleRank = MediatorLiveData<String>()
 
-    val pets = MediatorLiveData<Int>()
-    val totalPets: LiveData<Int> = MutableLiveData(PetType.validPets().size)
-
-    val achievements = MediatorLiveData<Int>()
-    val totalAchievements: LiveData<Int> = MutableLiveData(AchievementType.validAchievements().size)
-
     init {
         bossKc.addSource(clanMember) { bossKc.value = clanMember.value?.bossKc }
         points.addSource(clanMember) { points.value = clanMember.value?.points }
         alts.addSource(clanMember) { alts.value = clanMember.value?.alts?.joinToString("") { "• $it" } }
-        pets.addSource(clanMember) { pets.value = clanMember.value?.pets?.size }
-        achievements.addSource(clanMember) { achievements.value = clanMember.value?.achievements?.size }
         possibleRank.addSource(clanMember) { possibleRank.value = clanMember.value?.possibleRank?.label }
     }
 }
