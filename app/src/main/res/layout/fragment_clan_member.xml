@@ -49,38 +49,11 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16dp"
-                app:imageResource="@{viewModel.clanMember.rank.type.iconId}"
-                tools:src="@drawable/rank_dragon"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@{viewModel.clanMember.rank.label}"
-                tools:text="Dragon"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/member_alts"
-                android:textStyle="bold"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvAlts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.alts}"
-                tools:text="- Queen Blak\n- Petscape"/>
-
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/cvClanMember"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="16dp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

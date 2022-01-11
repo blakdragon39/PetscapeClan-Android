@@ -1,10 +1,12 @@
 package com.blakdragon.petscapeclan.ui.fragments.members
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +27,9 @@ import java.time.LocalDate
 @Composable
 fun ClanMemberScreen(clanMember: ClanMember) {
     Column(modifier = Modifier.fillMaxWidth()) {
+        RankDisplay(clanMember = clanMember)
+        Alts(clanMember = clanMember)
+        Spacer(modifier = Modifier.height(8.dp))
         LabeledValue(label = stringResource(R.string.member_boss_kc), value = clanMember.bossKc.toString())
         LabeledValue(label = stringResource(R.string.member_points), value = clanMember.points.toString())
         LabeledValue(label = stringResource(R.string.member_possible_rank), value = clanMember.possibleRank.label)
@@ -32,6 +37,28 @@ fun ClanMemberScreen(clanMember: ClanMember) {
         PetListSection(clanMember = clanMember)
         Spacer(modifier = Modifier.height(16.dp))
         AchievementListSection(clanMember = clanMember)
+    }
+}
+
+@Composable
+private fun RankDisplay(clanMember: ClanMember) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+        Image(
+            painter = painterResource(clanMember.rank.type.iconId),
+            contentDescription = "Rank Icon",
+            modifier = Modifier.width(60.dp).height(60.dp)
+        )
+        Text(text = clanMember.rank.label, fontSize = 20.sp)
+    }
+}
+
+@Composable
+private fun Alts(clanMember: ClanMember) {
+    Column {
+        Text(text = stringResource(R.string.member_alts), fontWeight = FontWeight.Bold)
+        clanMember.alts.forEach {
+            Text(text = "• $it")
+        }
     }
 }
 
