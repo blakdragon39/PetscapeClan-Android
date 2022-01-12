@@ -1,14 +1,21 @@
 package com.blakdragon.petscapeclan.ui.fragments.members
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,8 +32,12 @@ import com.blakdragon.petscapeclan.ui.theme.PetscapeTheme
 import java.time.LocalDate
 
 @Composable
-fun ClanMemberScreen(clanMember: ClanMember) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+fun ClanMemberScreen(clanMember: ClanMember, onEditClick: () -> Unit) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
+        Header(clanMember = clanMember, onEditClick = onEditClick)
+        Spacer(modifier = Modifier.height(16.dp))
         RankDisplay(clanMember = clanMember)
         Alts(clanMember = clanMember)
         Spacer(modifier = Modifier.height(8.dp))
@@ -41,12 +52,39 @@ fun ClanMemberScreen(clanMember: ClanMember) {
 }
 
 @Composable
+private fun Header(clanMember: ClanMember, onEditClick: () -> Unit) {
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = clanMember.runescapeName,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center)
+        )
+        Icon(
+            imageVector = Icons.Filled.Edit,
+            contentDescription = "Edit Clan Member",
+            tint = MaterialTheme.colors.onPrimary,
+            modifier = Modifier
+                .width(32.dp)
+                .height(32.dp)
+                .align(Alignment.CenterEnd)
+                .clickable { onEditClick() }
+        )
+    }
+}
+
+@Composable
 private fun RankDisplay(clanMember: ClanMember) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         Image(
             painter = painterResource(clanMember.rank.type.iconId),
             contentDescription = "Rank Icon",
-            modifier = Modifier.width(60.dp).height(60.dp)
+            modifier = Modifier
+                .width(60.dp)
+                .height(60.dp)
         )
         Text(text = clanMember.rank.label, fontSize = 20.sp)
     }
@@ -140,6 +178,7 @@ private fun PreviewClanMemberScreen() = PetscapeTheme {
             points = 100,
             alts = listOf("MsBlakdragon"),
             possibleRank = Rank(RankType.Dragon, "Dragon", 0, 0)
-        )
+        ),
+        onEditClick = {}
     )
 }
