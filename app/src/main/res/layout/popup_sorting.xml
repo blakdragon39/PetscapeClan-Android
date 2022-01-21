@@ -22,21 +22,21 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <RadioButton
-                android:id="@+id/rbDefault"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/home_sort_default"
-                android:padding="8dp"
-                android:checked="@{viewModel.sortMethod == HomeSortMethod.DEFAULT}"/>
+<!--            <RadioButton-->
+<!--                android:id="@+id/rbDefault"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/home_sort_default"-->
+<!--                android:padding="8dp"-->
+<!--                android:checked="@{viewModel.sortMethod == HomeSortMethod.DEFAULT}"/>-->
 
-            <RadioButton
-                android:id="@+id/rbAlphabetical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/home_sort_alphabetical"
-                android:padding="8dp"
-                android:checked="@{viewModel.sortMethod == HomeSortMethod.ALPHABETICAL}"/>
+<!--            <RadioButton-->
+<!--                android:id="@+id/rbAlphabetical"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/home_sort_alphabetical"-->
+<!--                android:padding="8dp"-->
+<!--                android:checked="@{viewModel.sortMethod == HomeSortMethod.ALPHABETICAL}"/>-->
 
         </RadioGroup>
 

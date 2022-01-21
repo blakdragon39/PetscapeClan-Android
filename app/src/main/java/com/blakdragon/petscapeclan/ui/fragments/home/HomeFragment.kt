@@ -14,6 +14,8 @@ import com.blakdragon.petscapeclan.databinding.FragmentHomeBinding
 import com.blakdragon.petscapeclan.models.ClanMember
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
+import com.blakdragon.petscapeclan.ui.screens.home.HomeScreen
+import com.blakdragon.petscapeclan.ui.theme.PetscapeTheme
 import timber.log.Timber
 
 class HomeFragment : BaseFragment<MainActivity>() {
@@ -37,15 +39,21 @@ class HomeFragment : BaseFragment<MainActivity>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
+//        binding.swipeRefreshClanMembers.setOnRefreshListener { viewModel.getClanMembers() }
         binding.ivFilters.setOnClickListener { FilterPopup().show(it, viewModel) }
         binding.ivSort.setOnClickListener { SortPopUp().show(it, viewModel) }
 
         adapter = ClanMemberAdapter(this::onClanMemberClick, this::onClanMemberLongClick)
-        binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvClanMembers.adapter = adapter
+//        binding.rvClanMembers.layoutManager = LinearLayoutManager(requireContext())
+//        binding.rvClanMembers.adapter = adapter
 
         observeViewModel()
+
+        binding.cvHome.setContent {
+            PetscapeTheme {
+                HomeScreen(viewModel)
+            }
+        }
     }
 
     override fun onResume() {
@@ -59,10 +67,10 @@ class HomeFragment : BaseFragment<MainActivity>() {
     }
 
     private fun observeViewModel() {
-        viewModel.exception.observe(viewLifecycleOwner) { parentActivity.handleError(it) }
-        viewModel.filteredClanMembers.observe(viewLifecycleOwner) { if (it != null) adapter.setClanMembers(it) }
-
-        viewModel.filterNotSeenToday.observe(viewLifecycleOwner) { Timber.i("LAST SEEN $it") }
+//        viewModel.exception.observe(viewLifecycleOwner) { parentActivity.handleError(it) }
+//        viewModel.filteredClanMembers.observe(viewLifecycleOwner) { if (it != null) adapter.setClanMembers(it) }
+//
+//        viewModel.filterNotSeenToday.observe(viewLifecycleOwner) { Timber.i("LAST SEEN $it") }
     }
 
     private fun onClanMemberClick(clanMember: ClanMember) {

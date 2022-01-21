@@ -11,6 +11,7 @@ import com.blakdragon.petscapeclan.R
 import com.blakdragon.petscapeclan.databinding.FragmentComposeViewBinding
 import com.blakdragon.petscapeclan.ui.BaseFragment
 import com.blakdragon.petscapeclan.ui.MainActivity
+import com.blakdragon.petscapeclan.ui.screens.members.ClanMemberScreen
 import com.blakdragon.petscapeclan.ui.theme.PetscapeTheme
 
 class ClanMemberFragment : BaseFragment<MainActivity>() {
@@ -29,7 +30,7 @@ class ClanMemberFragment : BaseFragment<MainActivity>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.cvClanMember.setContent {
+        binding.composeView.setContent {
             PetscapeTheme {
                 ClanMemberScreen(
                     clanMember = args.clanMember,

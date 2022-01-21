@@ -29,13 +29,13 @@
                 android:src="@drawable/ic_search"
                 android:tint="@color/onPrimary"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@={viewModel.filterName}"
-                android:layout_marginEnd="4dp"
-                tools:text="Blak"/>
+<!--            <androidx.appcompat.widget.AppCompatEditText-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@={viewModel.filterName.value}"-->
+<!--                android:layout_marginEnd="4dp"-->
+<!--                tools:text="Blak"/>-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivSort"
@@ -54,31 +54,12 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshClanMembers"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cvHome"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="16dp"
-            app:refreshing="@{viewModel.clanMembersLoading}"
             app:layout_constraintTop_toBottomOf="@id/filtering"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp"
-                app:cardBackgroundColor="@color/onPrimary"
-                app:cardCornerRadius="16dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvClanMembers"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/cell_clan_member"/>
-
-            </androidx.cardview.widget.CardView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -21,19 +21,19 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/home_filter_not_seen"
-                android:padding="8dp"
-                android:checked="@={viewModel.filterNotSeenToday}"/>
+<!--            <androidx.appcompat.widget.AppCompatCheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/home_filter_not_seen"-->
+<!--                android:padding="8dp"-->
+<!--                android:checked="@={viewModel.filterNotSeenToday}"/>-->
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/home_filter_rank_up"
-                android:padding="8dp"
-                android:checked="@={viewModel.filterNeedsRankUp}"/>
+<!--            <androidx.appcompat.widget.AppCompatCheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/home_filter_rank_up"-->
+<!--                android:padding="8dp"-->
+<!--                android:checked="@={viewModel.filterNeedsRankUp}"/>-->
 
         </LinearLayout>
 

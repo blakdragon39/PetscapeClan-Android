@@ -1,4 +1,4 @@
-package com.blakdragon.petscapeclan.ui.fragments.members
+package com.blakdragon.petscapeclan.ui.screens.members
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,13 +28,15 @@ import com.blakdragon.petscapeclan.models.enums.PetType
 import com.blakdragon.petscapeclan.models.enums.RankType
 import com.blakdragon.petscapeclan.ui.components.CardedList
 import com.blakdragon.petscapeclan.ui.theme.PetscapeTheme
+import com.blakdragon.petscapeclan.utils.previewClanMember1
 import java.time.LocalDate
 
 @Composable
 fun ClanMemberScreen(clanMember: ClanMember, onEditClick: () -> Unit) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp)) {
+        .padding(16.dp)
+    ) {
         Header(clanMember = clanMember, onEditClick = onEditClick)
         Spacer(modifier = Modifier.height(16.dp))
         RankDisplay(clanMember = clanMember)
@@ -160,25 +161,7 @@ private fun ListHeader(header: String, has: Int?, outOf: Int?) {
 @Composable
 private fun PreviewClanMemberScreen() = PetscapeTheme {
     ClanMemberScreen(
-        ClanMember(
-            id = "",
-            runescapeName = "Blakdragon",
-            rank = Rank(RankType.Dragon, "Dragon", 0, 0),
-            joinDate = LocalDate.now(),
-            lastSeen = LocalDate.now(),
-            bossKc = 40000,
-            pets = listOf(
-                Pet(PetType.AbyssalOrphan, "Abyssal Orphan"),
-                Pet(PetType.CallistoCub, "Callisto Cub")
-            ),
-            achievements = listOf(
-                Achievement(AchievementType.AchievementCape, "Achievement Cape"),
-                Achievement(AchievementType.ChampionCape, "Champion Cape")
-            ),
-            points = 100,
-            alts = listOf("MsBlakdragon"),
-            possibleRank = Rank(RankType.Dragon, "Dragon", 0, 0)
-        ),
+        previewClanMember1,
         onEditClick = {}
     )
 }

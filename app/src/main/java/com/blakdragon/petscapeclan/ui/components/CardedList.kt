@@ -17,11 +17,7 @@ import com.blakdragon.petscapeclan.ui.theme.PetscapeTheme
 
 @Composable
 fun CardedList(items: List<String>, modifier: Modifier) {
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        modifier = modifier,
-        backgroundColor = MaterialTheme.colors.onPrimary
-    ) {
+    CardedBackground(modifier = modifier) {
         LazyColumn(modifier = Modifier.padding(16.dp)) {
             items(items) { item -> ListItem(item) }
         }
